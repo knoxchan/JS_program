@@ -1,0 +1,41 @@
+-- dog
+
+i: dog
+from: AUTO
+to: AUTO
+smartresult: dict
+client: fanyideskweb
+salt: 16171651032648
+sign: e787a7e49a353a78ee0b46f06ef481fd
+lts: 1617165103264
+bv: 3da01a09873456cfb5dba05f2124b148
+doctype: json
+version: 2.1
+keyfrom: fanyi.web
+action: FY_BY_REALTlME
+
+--cat
+
+i: cat
+from: AUTO
+to: AUTO
+smartresult: dict
+client: fanyideskweb
+salt: 16171654245170
+sign: 788fa6e17d53d4bdb4591b36825b510a
+lts: 1617165424517
+bv: 3da01a09873456cfb5dba05f2124b148
+doctype: json
+version: 2.1
+keyfrom: fanyi.web
+action: FY_BY_REALTlME
+
+结论 发现
+会变的参数
+signs
+alt
+lts
+
+
+lts 比salt少一位 前面几位都是一样的
+sign
