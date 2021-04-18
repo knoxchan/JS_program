@@ -1,0 +1,216 @@
+
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" style="overflow-x: hidden;">
+<head><meta http-equiv="Content-Type" content="text/html; charset=gb2312" /><title>
+	飞卢网--用户登录
+</title><link href="//s.faloo.com/novel/favicon.ico" rel="bookmark" /><link href="//s.faloo.com/novel/favicon.ico" rel="shortcut icon" /><meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" /><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0, viewport-fit=cover" />
+    <script src="/js/jquery-2.2.3.min.js"></script>
+    <script src="/js/util.js" type="text/javascript"></script>
+    <script src="//u.faloo.com/js/common.js" type="text/javascript"></script>
+    <script src="/js/md5.js" type="text/javascript"></script>
+    <link href="/css/commonStyle.css" rel="stylesheet" /><link href="/css/login2019.css?1" rel="stylesheet" />
+
+    <script type="text/javascript">
+        function GetUrlParam(source, name) {
+            var reg = new RegExp("(^|\\?|&)" + name + "=([^&]*)(\\s|&|$)", "i");
+            if (reg.test(source)) return RegExp.$2;
+            return "";
+        }
+        var backurl = GetUrlParam(document.location, "backurl");
+        backurl = decodeURIComponent(backurl);
+        if (backurl == "")
+            backurl = "http://www.faloo.com/";
+
+        function ctlent() { //if (window.event.keyCode == 13) { login(); } 
+        }
+
+        function login() {
+            var pwd = document.faloo_login.txtPwd4temp.value;
+            pwd = Trim(pwd);
+            var verifyCode = document.faloo_login.verifyCode.value;
+
+            var pwd4temp = pwd;
+            if (document.faloo_login.txtUserID.value.length < 1) {
+                alert("用户ID不能为空");
+                document.faloo_login.txtUserID.focus();
+            }
+            else if (pwd.length < 1) {
+                alert("密码不能为空");
+                document.faloo_login.txtPwd.focus();
+            }
+            else if (verifyCode.length != 4) {
+                alert("请正确填写验证码(4位字符)");
+                document.faloo_login.verifyCode.focus();
+            }
+            else {
+                document.faloo_login.backurl.value = backurl;
+                var time_stamp =1618724822;//  get_timestamp();
+                document.faloo_login.ts.value = time_stamp;
+                pwd = login_md5(pwd, time_stamp);
+                document.faloo_login.txtPwd.value = pwd;
+                document.faloo_login.txtPwd4temp.value = "";
+                document.faloo_login.action = "Login.aspx?t=2&BackUrl=" + backurl + "&ran=" + Math.random();
+                document.faloo_login.method = "get";
+                document.faloo_login.submit();
+                document.faloo_login.txtPwd4temp.value = pwd4temp;
+            }
+        }
+
+    </script>
+
+</head>
+<body class="bodyClass">
+    <div>
+        
+        <div class="top">
+            <div class="topLeft"></div>
+            <div class="topRight"></div>
+            <div class="clearFloat"></div>
+        </div>
+        
+        <div class="center">
+            <div class="center-top">
+                <div class="center-top-left">
+                    <span><a href ="https://b.faloo.com" target = "_blank" title ="飞卢小说网" ><img src ="//s.faloo.com/novel2/logo.png" alt ="飞卢小说网" /></a></span><div><i>|</i><a href="Login.aspx">用户登录</a></div>
+                </div>
+                <div class="clearFloat"></div>
+            </div>
+            <div class="center-input">
+                <div class="center-input-banner">
+                    <img src="//s.faloo.com/u/regist/login/login-banner.png" />
+                </div>
+                <div class="center-input-login-content">
+                    <form style="margin: 0px" name="faloo_login" id="faloo_login" method="get" enctype="application/x-www-form-urlencoded" target="_self">
+                        <div class="title">
+                            <b>登录</b>
+                        </div>
+                        <ul>
+                            <li>
+                                <i>
+                                    <img src="//s.faloo.com/u/regist/ico/userID.png" /></i>
+                                <span>
+                                    <input type="text" id="txtUserID" name="txtUserID" placeholder="用户ID（4-16位）" value="1319220340" onblur="refresh_valiate();" maxlength="32" />
+                                </span>
+                            </li>
+                            <li>
+                                <i>
+                                    <img src="//s.faloo.com/u/regist/ico/pwd.png" /></i>
+                                <p class="pPwd">
+                                    <input type="hidden" id="txtPwd" name="txtPwd" />
+                                    <input class="login_input" id="txtPwd4temp" type="password" name="txtPwd4temp" placeholder="输入密码（6-16位）" maxlength="32" />
+                                </p>
+                                <div class="retrievePwd">
+                                    <a href="RetrievePwd.aspx" target="_blank">忘记密码</a>
+                                </div>
+                                <div class="clearFloat"></div>
+                            </li>
+                            <li class="marginBottom">
+                                <i>
+                                    <img src="//s.faloo.com/u/regist/ico/code.png" /></i>
+                                <p>
+                                    <input type="text" id="verifyCode" name="verifyCode" placeholder="验证码" maxlength="4" autocomplete="off" onfocus="refresh_valiate4_validate_input();" />
+                                    <input name='ts' id='ts' type='hidden' /><input name='t' id='t' value="2" type='hidden' /><input name='Mi574940' id='Mi574940' value="0418" type='hidden' /><input name='backurl' id='backurl' value="2" type='hidden' />
+                                </p>
+                                <div class="codeReload">
+                                    <a href="javascript:void(0)" onclick='refresh_valiate()'>
+                                        <img src="//s.faloo.com/u/regist/ico/reloadcode.png" /></a>
+                                </div>
+                                <div class="codeImg">
+                                    <a href="javascript:void(0)" onclick='refresh_valiate()'>
+                                        <img id="validate_image" class="validate_image" src="" /></a>
+                                </div>
+                                <div class="clearFloat"></div>
+                            </li>
+                        </ul>
+                        <div class="textContent">
+                            <p>
+                                <span>注：验证码不区分大小写</span>
+                            </p>
+                            <p class="btnLoginOK"><i>
+                                <input type="button" id="ibnlogin" name="ibnlogin" onclick='login(); return false' value="登录" /></i></p>
+
+                            <p><b>还没有账号？</b><a href="Register4Phone.aspx?backurl=http://www.faloo.com/" class="lgoin">立即注册</a></p>
+                            <div class="clearFloat"></div>
+                        </div>
+                    </form>
+
+                    <div class="textContent threeLogin">
+                        <p class="wxloginBtn">
+                            <a href="../transition.aspx?act=wx">
+                                <span>
+                                    <img src="//s.faloo.com/u/regist/login/login-wx.png" /></span>
+                                <b>微信登录</b>
+                            </a>
+                        </p>
+                        <p class="qqLoignBtn">
+                            <a href="../transition.aspx?act=qq">
+                                <span>
+                                    <img src="//s.faloo.com/u/regist/login/login-qq.png" />
+                                </span>
+                                <b>QQ登录</b>
+                            </a>
+                        </p>
+                        <div class="clearFloat"></div>
+                    </div>
+                </div>
+                <div class="clearFloat"></div>
+                <script type="text/javascript">alert('提示：\n1.请获取验证码！\n');</script>
+            </div>
+            <div class="center-input-left">
+                <img src="//s.faloo.com/u/regist/login/login-bg-leftimg.png" />
+            </div>
+            <div class="center-input-right">
+                <img src="//s.faloo.com/u/regist/login/login-bg-rightimg.png" />
+            </div>
+        </div>
+        
+        <div class="bottom">
+<div class="registBg"></div>
+<div class="bottomLeft"></div>
+<div class="bottomRight"></div>
+<div class="bottomContent">飞卢小说网(faloo.com) 版权所有</div>
+<div class="clearFloat"></div>
+</div>
+<script type="text/javascript">try { switch_bakesite(); } catch (err) { }</script>
+        <script type="text/javascript">
+            function refresh_valiate() {
+                refresh_validate_code("txtUserID", "login_code");
+            }
+            function refresh_valiate4_validate_input() {
+                var src = document.getElementById("validate_image").getAttribute("src");
+                if (src == "")
+                    refresh_valiate();
+            }
+
+            if (!IsPC()) {
+                //手机端，把微信隐藏
+                $(".wxloginBtn").hide();
+                $(".qqLoignBtn").css("margin", "0 auto").css("float","none");
+            }
+
+
+            function IsPC() {
+                var userAgentInfo = navigator.userAgent;
+                var Agents = ["Android", "iPhone",
+                   "SymbianOS", "Windows Phone",
+                   "iPad", "iPod"];
+                var flag = true;
+                for (var v = 0; v < Agents.length; v++) {
+                    if (userAgentInfo.indexOf(Agents[v]) > 0) {
+                        flag = false;
+                        break;
+                    }
+                }
+                return flag;
+            }
+
+
+
+        </script>
+    </div>
+
+    
+</body>
+</html>
+<script type="text/javascript">document.write("<script src='//flux.faloo.com/pvdata.aspx?faloo_ch_id=19&faloo_ref=" + document.referrer + "'><\/script>");</script>
