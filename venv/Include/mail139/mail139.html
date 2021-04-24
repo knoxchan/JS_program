@@ -1,0 +1,1881 @@
+<!DOCTYPE HTML>
+<html style="overflow-x: auto;">
+<head>
+<meta charset="utf-8">
+<meta name="Keywords" content="139邮箱" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<link rel="dns-prefetch" href="http://da.mmarket.com/" />
+<title>139邮箱</title>
+<script type="text/javascript">
+var _udata = _udata || [];
+_udata.push(["setStartTime", new Date()]);
+
+if (window.top != window) {
+    try {
+        top.location.href = window.location.href;
+    } catch (e) {
+        alert("139邮箱标准版不支持内嵌窗口登录，请在新窗口打开:http://mail.10086.cn");
+    }
+}
+if(!navigator.cookieEnabled){
+    alert("您好，您设置了禁止使用cookie。请设置启用Cookie功能，再重新登录");
+}
+if(navigator.userAgent.toLocaleUpperCase().indexOf("msie") && document.documentMode<9){
+    location.href=location.href.replace("/index.html","/browser_tips.html");
+}
+document.domain=window.location.host.match(/[^.]+\.[^.]+$/)[0];
+function getProtocol(){
+    return window.location.protocol+"//";
+}
+
+var m2012ResourceDomain = getProtocol() + location.host;
+if (document.domain == "10086.cn" && window.location.href.indexOf("reload=true") == -1) {
+    m2012ResourceDomain = /appmail3/.test(location.host) ? getProtocol()+"img0.zone139.com" : getProtocol()+"img.zone139.com";
+}
+var currentVersion="2.5";
+ 
+function getRootPath(){
+    return "/m6"
+    
+}
+function loadScript(path, _doc, charset, rootPath) {
+    //fixed proxy.htm
+    if (path === "jquery.js") {
+        if (_doc && _doc.location.pathname.indexOf("proxy.htm") > -1) {
+            return;
+        }
+    }
+    if (true) {
+        if(path.match(/^\/m2015\//)){
+            path=path.replace(/^\/m2015\//,getRootPath()+"/");//批量替换根路径
+        }
+        if (path.indexOf(".js") > -1) {
+            var jsVersion = getResourceVersion(path) || "20130612";
+
+            if (window.location.href.indexOf("reload=true") > -1) {
+                jsVersion += "_reload";
+            }
+            if (path.indexOf("/") == -1) {
+                if (rootPath) {
+                    path = rootPath + path;
+                } else {
+                    var base = getRootPath()+"/js";
+                    if (path.indexOf("pack.js") > -1) {
+                        base += "/packs";
+                    }
+                    path = base + "/" + path;
+                }
+            }
+            if (path.indexOf("?") == -1) {
+                path += "?v=" + jsVersion;
+            }
+            if (path.indexOf(getProtocol()) == -1 && path.indexOf("/") == 0) {
+                path = m2012ResourceDomain + path;
+            }
+        }
+        if (!charset && path.indexOf(getRootPath()+"/") > -1) {
+            charset = "utf-8";
+        }
+    }
+    (_doc || document).write("<script jsonload='0' onload='this.setAttribute(\"jsonload\",\"1\")' " + (charset ? "charset=\"" + charset + "\" " : "") + " type=\"text/javascript\" src=\"" + path + "\"></" + "script>");
+}
+var m139LoadScript = loadScript,resetDiskSelect = true;//网盘目录记忆功能清空
+
+function getResourceVersion(path) {
+    if (window.Config_FileVersion) {
+        var fileName = path.match(/[^\/\\]*$/)[0];
+        return Config_FileVersion[fileName] || Config_FileVersion["defaults"];
+    } else {
+        return "";
+    }
+}
+
+function loadCSS(path, _doc) {
+    if (typeof path == "string") path = [path];
+    for (var i = 0; i < path.length; i++) {
+        var item = path[i];
+        if (item.indexOf(getProtocol()) == -1) {
+            item = getRootPath()+"/css/" + item;
+            item = m2012ResourceDomain + item;
+        }
+        var cssVersion = getResourceVersion(item);
+        if (item.indexOf("?") == -1) {
+            item = item + "?v=" + cssVersion;
+        }
+        if (item.indexOf('skin_') != -1) {
+            //return ;
+            (_doc || document).write('<link id="skinLink" cssonload="0" onload="this.setAttribute(\'cssonload\',\'1\')" rel="stylesheet" href="' + item + '" type="text/css" />');
+        }else if(item.indexOf('mpost2014') != -1){
+            (_doc || document).write('<link id="skinLink" cssonload="0" onload="this.setAttribute(\'cssonload\',\'1\')" rel="stylesheet" href="' + path[i] + '" type="text/css" />');
+        }else {
+       		(_doc || document).write('<link cssonload="0" onload="this.setAttribute(\'cssonload\',\'1\')" rel="stylesheet" href="' + item + '" type="text/css" />');
+		}
+    }
+}
+function Require(path,callback){
+    var head = document.getElementsByTagName('HEAD').item(0);
+    if(typeof path=="string"){
+        path=[path];
+    }
+    var len=path.length;
+    var count=0;
+    function loadSuccess(){//IE下有bug
+		this.setAttribute('cssonload','1');
+        count++;
+        if(count>=len){
+            callback && callback();
+        }
+    }
+    for (var i = 0; i < path.length; i++) {
+		var item = path[i];
+        if (item.indexOf(getProtocol()) == -1) {
+            item = getRootPath()+"/css/" + item;
+            item = m2012ResourceDomain + item;
+        }
+        var cssVersion = getResourceVersion(item);
+        if (item.indexOf("?") == -1) {
+            item = item + "?v=" + cssVersion;
+        }
+
+        if(item.indexOf(".css")>=0){
+            var invoiceLink = $(document).find("link[id='invoiceLink']")
+            if(invoiceLink.length && len == 1){
+                // 已经加载过直接回调,不重复再加载
+                callback && callback();
+                continue;
+            }
+
+            var style = document.createElement('link');
+
+            style.rel = 'stylesheet';
+            style.type = 'text/css';
+			style.setAttribute("cssonload", 0);
+            style.onload=loadSuccess;
+			style.href = item;
+              
+			if (item.indexOf('skin_') != -1){
+				// skin
+				style.id = "skinLink";
+			}else if(item.indexOf('mpost2014') != -1){
+				// skin
+				style.id = "skinLink";
+			    style.href = path[i];
+			}else if(item.indexOf('invoice/invoice') != -1){
+				// 电子发票专用
+				style.id = "invoiceLink";
+			}else{
+			    // normal
+			}
+
+            // 添加前先移除，防止添加重复的
+            $(document).find("link[href='" + item + "']").remove();
+            head.appendChild(style);
+        }else if(item.indexOf(".js")>=0){
+            var script = document.createElement('script');
+            script.src = getRootPath()+"/js/"+path[i]+"?v=";
+            script.type = 'text/javascript';
+            script.onload=loadSuccess;
+            head.appendChild(script);
+        }
+    }
+}
+var IndexHTML = {
+    /**@public*/
+    checkLoadSuccess:function(){
+        var errNS = this.checkErrorNS();
+        if (errNS) {
+            //send log
+            this.reloadPage("&reload=true&errorNS=" + errNS);
+        } else {
+            //success
+            this.showMainView();
+        }
+    },
+    cssErrorList:[],
+    checkCssLoadSuccess:function (){
+        var elapse=0;
+        var self=this;
+        var intervalId=setInterval(function (){
+            var nodes=document.getElementsByTagName("link");
+            var arr=[], cssArr = [];
+            for(var i=0;i<nodes.length;i++){
+                var node=nodes[i];
+                if(node.href && node.href.indexOf(".css")>=0){
+                    var isLoad=node.getAttribute("cssonload");
+                    if(isLoad==0){
+                        var m=node.href.match(/\/(\w+\.css)/);
+                        if(m && m.length>1){
+                            arr.push(m[1]);
+							cssArr.push(node.href);
+                        }
+                    }
+                }
+
+            }
+
+            if(arr.length>0){
+                if(elapse>=10){
+                    //reload
+                    if (location.href.indexOf("reload=true") == -1) {
+						var exceptionCssStr = arr.join(",")
+						if(exceptionCssStr.indexOf("index.css") != -1 || exceptionCssStr.indexOf("skin") != -1) {
+							// index.css或皮肤样式文件加载失败时，只能刷新页面, 且只能刷一次
+						    location.href = location.href + "&reload=true&errorCSS=" + arr.join(",");
+						}else{
+			                cssArr.length && Require(cssArr);
+                            clearInterval(intervalId);
+							var time = new Date();
+							HealthCheckModule && HealthCheckModule.sendLog({
+							    level: "ERROR",
+							    time: time,
+							    runtime: time,
+							    name: "LOGINERROR",
+							    errorObj: exceptionCssStr,
+							    commonlog: "[" + time + "]LOGINERROR:" + exceptionCssStr //兼容老版本格式(监控采集)
+						    });
+						}
+                        return ;
+                    }
+                }
+
+                if(elapse>20){
+                    self.cssErrorList=arr;
+                    clearInterval(intervalId);
+                }
+
+            }else{
+               if(elapse>=10){clearInterval(intervalId);} // IE11,404也会执行onload方法,导致arr怎是0。这里做下兼容,超过10次关闭定时器
+            }
+
+            elapse++;
+        },1000)
+    },
+    /**@inner*/
+    checkErrorNS: function () {
+        var chkList = ["Backbone", "M139", "M2012","SiteConfig", { "M2012": ["MainApplication", "MatrixVM"] }];
+        var errNS = "";
+        for (var i = 0; i < chkList.length; i++) {
+            var ns = chkList[i];
+            if (typeof ns == "string") {
+                errNS = checkNS(window, ns);
+            } else {
+                for (var subNS in ns) {
+                    errNS = checkNS(window[subNS], ns[subNS]);
+                    if (errNS) break;
+                }
+            }
+            if (errNS) break;
+        }
+        return errNS;
+        function checkNS(target,nsList) {
+            if (typeof nsList == "string") nsList = [nsList];
+            for (var i = 0; i < nsList.length; i++) {
+                var ns = nsList[i];
+                if (!target[ns]) {
+                    return ns;
+                }
+            }
+        }
+    },
+    /**@inner*/
+    reloadPage: function (query) {
+        if (location.href.indexOf(query) == -1) {
+            location.href = location.href + query;
+        } else {
+            //重试还是失败
+            alert("加载文件发生异常，可能是网络原因，请使用 Ctrl+F5 刷新页面");
+        }
+    },
+    /**@inner*/
+    showMainView: function () {
+        //一开始不加class，不然loading有颜色
+        $(document.body).addClass('bodycolor');
+        //$(".indexLoading").hide();
+        $('#indexLoadingDiv').hide();
+        $(".Loading_Hidden").show();
+    }
+};
+
+/**
+精简版日志上报
+*/
+(function () {
+    var HealthCheckModule = {
+        timeMap : {}, //记录时间戳的map
+        startHealthCheck: function () {
+            var This = this;
+            function setTimestamp(key) {
+                if (!This.timeMap[key]) {
+                    This.timeMap[key] = new Date();
+                }
+            }
+            var check_map = {
+                M139: function () {
+                    return !!window.M139;
+                },
+                TopWin: function () {
+                    return window == top;
+                },
+                M2012: function () {
+                    return !!window.M2012;
+                },
+                SiteConfig: function () {
+                    return !!window.SiteConfig;
+                },
+                jQuery: function () {
+                    return !!window.jQuery;
+                },
+                Folders: function () {
+                    if (document.getElementById("li_mailbox")!=null) {
+                        setTimestamp("folders");
+                        return true;
+                    }
+                    return false;
+                },
+                Welcome: function () {
+                    //var result = !!(window.jQuery && $("#adv2", $("iframe[id=welcome]")[0].contentWindow.document).children().length > 0);
+                    if (window.WELCOME_LOADED) {
+                        setTimestamp("welcome");
+                        return true;
+                    }
+                }
+            };
+            var errList;
+            var interval = 500;
+            var stopLog = 1000 * 65 / interval;
+            var timer = setInterval(watch, interval);
+            var count = 0;
+            function watch() {
+                count++;
+                var time = count * interval;
+                if (isSucc()) {
+                    clearInterval(timer);
+                    This.logLoginSuccess(time);
+                } else {
+                    //15s,25s...65s
+                    if (count >= 30 && (count - 30) % 20 == 0) {
+                        if (count <= stopLog) {
+                            
+                            if(IndexHTML.cssErrorList.length>0){
+                                errList=errList.concat(IndexHTML.cssErrorList);
+                            }
+                            This.logLoginUnSuccess(time, errList.join(","));
+                        }
+                    }
+                }
+            }
+            function isSucc() {
+                var error = [];
+                for (var p in check_map) {
+                    if (!check_map[p]()) {
+                        error.push(p);
+                    }
+                }
+                if (error.length > 0) {
+                    errList = error;
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+        },
+        sendLog: function (logInfo) {
+            var log = '<object><string name="version">m2012</string><array name="messages"><object>';
+            //noencode
+            for (var p in logInfo) {
+                log += '<string name="' + p.toUpperCase() + '">' + logInfo[p] + '</string>';
+            }
+            log += '</object></array></object>';
+            var url = (window.SiteConfig && SiteConfig.scriptLog) || "/mw2/weather/weather?func=user:monitorLogAction";
+            url += "&sid=" + this.getSid();
+            LightHttpClient.post({
+                url: url,
+                data: log
+            });
+        },
+        logLoginSuccess: function (time) {
+            var fromLoginTime = "";
+            var welcomeLoadTime = "";
+            var loginCguid = $Url.queryString("cguid");
+            if (loginCguid) {
+                var lDate = M139.Text.Utils.getDateTimeFromCGUID(loginCguid);
+                if (lDate) {
+                    var folderTime = this.timeMap["folders"];
+                    if (folderTime < lDate) {
+                        lDate.setDate(lDate.getDate() - 1);//跨天了
+                    }
+                    fromLoginTime = folderTime - lDate;
+                    welcomeLoadTime = this.timeMap["welcome"] - lDate;
+                }
+            }
+            this.sendLog({
+                time: time,
+                name: "LOGINSUCCESS",
+                level: "INFO",
+                serviceTime: $Url.queryString("mtime"),
+                fromLoginTime: fromLoginTime,
+                welcomeLoadTime:welcomeLoadTime,
+                loginCguid: loginCguid
+            });
+        },
+        logLoginUnSuccess: function (time,errObj) {
+            this.sendLog({
+                level: "ERROR",
+                time: time,
+                runtime: time,
+                name: "LOGINERROR",
+                errorObj: errObj,
+                commonlog: "[" + time + "]LOGINERROR:" + errObj //兼容老版本格式(监控采集)
+            });
+        },
+        getSid: function () {
+            return location.href.match(/sid=([^&]+)/)[1];
+        }
+    };
+    var LightHttpClient = {
+        post: function (options) {
+            var xhr = this.getXHR();
+            xhr.open("post", options.url, true);
+            xhr.send(options.data || null);
+        },
+        getXHR: function (options) {
+            var win = (options && options.window) || window;
+            if (win.XMLHttpRequest) {
+                return new win.XMLHttpRequest();
+            } else {
+                var MSXML = ['MSXML2.XMLHTTP.5.0', 'MSXML2.XMLHTTP.4.0', 'MSXML2.XMLHTTP.3.0', 'Microsoft.XMLHTTP'];
+                for (var n = 0; n < MSXML.length; n++) {
+                    try {
+                        return new win.ActiveXObject(MSXML[n]);
+                        break;
+                    }catch (e) {}
+                }
+            }
+        }
+    };
+    HealthCheckModule.startHealthCheck();
+	window.HealthCheckModule = HealthCheckModule;
+})(window);
+
+function changeOpacityBySkin(skinPath){
+    // 浅色皮肤下顶部"官方APP"链接hover时不同的效果处理
+    var arr = ["skin_default","skin_skyBlue","skin_navigator","skin_springDay","skin_animalMouse","skin_animalBull",
+    "skin_animalTiger","skin_animalPig","skin_animalDog","skin_animalMonkey","skin_animalSheep","skin_animalHorse",
+    "skin_animalSnail","skin_animalDragon","skin_animalChicken"
+    ];
+    var mobileEl = $("#iMobile");
+    if($.inArray(skinPath,arr) != -1){
+        mobileEl.removeClass("dkSkin").addClass("ltSkin");
+    }else{
+        mobileEl.removeClass("ltSkin").addClass("dkSkin"); 
+    }  
+
+    // 左侧导航栏分隔线这里需要把skin_businessBlue作为浅色皮肤处理
+    var newArr = arr.concat();
+    newArr.push("skin_businessBlue");
+    var tagListEl = $("#tag_list");
+    if($.inArray(skinPath,newArr) != -1){
+        tagListEl.css("border-bottom","1px solid rgba(0,0,0,.05)");
+    }else{
+        tagListEl.css("border-bottom","1px solid rgba(255,255,255,.1)");
+    }  
+}
+
+</script>
+<style>
+/*初始化loading界面 随机显示广告*/
+html,body,dl,dt,dd,p{margin:0;padding:0;color:#333;/*font:12px/1.5 "Microsoft YaHei",Verdana;*/}
+
+.ta_c{text-align:center;}
+/* ==== 图片文字左右结构 ====   */
+.imgInfo:after{content:".";clear:both;display:block;height:0;visibility:hidden;}
+.imgInfo{zoom:1;}
+.imgInfo .imgLink{float:left;margin-right:7px;}
+.imgInfo dl{overflow:hidden;zoom:1;}
+/* 刷新邮箱加载 */
+
+.i_l_yj{background-position:0 -69px!important;}  /* 一键搬家 */
+.i_l_khd{background-position:-160px -69px!important;}  /* 客户端发信 */
+.i_l_tag{background-position:0 -135px!important;}  /* 邮箱多标签操作 */
+.i_l_attr{background-position:-80px 0!important;}  /* 多附件上传 */
+.i_l_qun{background-position:-80px -69px!important;}  /* 群显单发 */
+.i_l_sj{background-position:-80px -135px!important;}  /* 手机号码 */
+
+/* 刷新邮箱加载v2 */
+.tipsBox{z-index: 999;}
+.tipsBox-container{background: #fff;}
+.tipsBox .float_l {float:left;}
+.tipsBox .mtop_5 {margin-top: 5px;}
+.tipsBox .mright_5 {margin-right: 5px;}
+.tipsBox {position: absolute;top: 50%;left: 50%;max-width: 418px;*width: 418px;margin-top: -48px;margin-left: -204px;/*-webkit-transform: translate(-50%, -50%);-moz-transform: translate(-50%, -50%);-ms-transform: translate(-50%, -50%);transform: translate(-50% -50%);*/}
+.tipsBox-container {overflow: hidden;*zoom: 1;position: relative;height:76px;padding: 15px 16px;border: 1px solid #d4dde9;}
+.tipsBox .tipsBox-aside {width:100px;margin-right: 14px;text-align: center;}
+.tipsBox .tipsBox-main {max-width: 270px;*width: 270px;}
+.tipsBox .tipsBox-main h6 {margin:0;font-size: 14px;color: #444;line-height: 1.85;}
+.tipsBox .tipsBox-main p {line-height: 1.45;}
+.tipsBox .tipsBox-main img {vertical-align: top;}
+.tipsBox .timeout {margin:14px 0 10px;text-align: left;}
+/*loading时隐藏主界面*/
+.Loading_Hidden{display:none;}
+/*vml统计图需要使用*/
+v\:group{behavior:url(#default#VML)}
+v\:rect{behavior:url(#default#VML)}
+v\:shape{behavior:url(#default#VML)}
+v\:fill{behavior:url(#default#VML)}
+o\:extrusion{behavior:url(#default#VML)}
+.MobileUserYellow{  background-color:yellow; width: 500px; border: 2px solid #ccc; height: 30px; line-height: 30px; text-align: center; margin:2px 0 0 -250px; position: absolute; left: 47%; font-size: 14px;}
+.addot{width: 5px;height: 5px;background: red; border-radius: 50%;margin-bottom: 10px;margin-left: 3px;}
+</style>
+
+<script>
+    (function () {
+        var match = location.href.match(/sid=([^&<>#]+)/);
+        if (match && match[1]) {
+            window.sid = match[1];
+        } else {
+            location.href = "http://mail.10086.cn";
+        }
+    })();
+    m139LoadScript(getProtocol() + location.host + getRootPath()+"/conf/config." + document.domain + ".js?sid=" + sid, document);
+</script>
+
+<script>
+    loadCSS(["../webfont/iconfont.css"],document);
+    loadCSS(["common/global_v3.css"],document);
+    loadCSS(["common/frame_v3.css"],document);
+    loadCSS(["module/inbox/inbox_v3.css"],document);
+</script>
+
+</head>
+
+<body style="overflow:hidden;">
+<div id="LoginLoadingTip">
+<script>
+    (function () {
+        //随机loading广告
+
+        var html = [ '<div class="load_for_second dialogCenter" id="indexLoadingDiv">',
+             '<div class="mail_wait_pic" title="努力加载中..."></div>',
+             '<p class="mail_load_p">努力加载中<span class="mail_wait_dot"></span></p>',
+         '</div>'].join("");
+        document.write(html);
+    })();
+</script>
+</div>
+<!--
+<script>
+    (function () {
+        var match = location.href.match(/sid=([^&<>#]+)/);
+        if (match && match[1]) {
+            window.sid = match[1];
+        } else {
+            location.href = "http://mail.10086.cn";
+        }
+    })();
+    m139LoadScript(getProtocol() + location.host + getRootPath()+"/conf/config." + document.domain + ".js?sid=" + sid, document);
+</script>-->
+
+<script>
+
+    // 需要隐藏的皮肤
+    // skin_mcloud 为废弃皮肤
+    // 其他为暂时下线皮肤
+    var HIDDEN_SKIN = {
+            'skin_mcloud': true,
+            'skin_anniversary': true,
+			'skin_twelAnimals':true,
+            'skin_claritDreamLeaf':false,
+            'skin_claritSideRiver':false,
+
+            "skin_anniversary":true,
+            
+            "skin_autumn":true,
+            "skin_bluesky":true,
+            "skin_brocade":true,
+            "skin_cat":true,
+            "skin_cherry":true,
+            "skin_child":true,
+            "skin_claritBamboo":true,
+            "skin_claritBrown":true,
+
+            "skin_claritDreamLeaf":true,
+            "skin_claritFlower":true,
+            "skin_claritForest":true,
+            "skin_claritGrass":true,
+            "skin_claritGreen":true,
+            "skin_claritGreeng":true,
+            "skin_claritLeaf":true,
+            "skin_claritOnRoad":true,
+            "skin_claritPurple":true,
+            "skin_claritRed":true,
+            "skin_claritRoad":true,
+            "skin_claritSideRiver":true,
+            "skin_claritSky":true,
+            "skin_claritSunset":true,
+            "skin_claritTifany":true,
+            "skin_claritUniverse":true,
+            "skin_claritWave":true,
+            "skin_dessert":true,
+            "skin_dew":true,
+            "skin_flowers":true,
+            "skin_golf":true,
+            "skin_hemaTheme":true,
+            "skin_ink":true,
+            "skin_light":true,
+            "skin_lightblue":"skin_businessBlue",
+            "skin_lithe":true,
+            "skin_mcloud":true,
+            "skin_mobileConference":"skin_Connecting",
+            "skin_morning":true,
+            "skin_mstar":true,
+            "skin_night":true,
+            "skin_orange":true,
+            "skin_paint":true,
+            "skin_passion":true,
+            "skin_pink":true,
+            "skin_purple":true,
+            "skin_red":true,
+            "skin_rose":true,
+            "skin_seabedblue":true,
+            "skin_sheepyear":"skin_newyear",
+            "skin_spring":true,
+            "skin_star":true,
+            "skin_summer":true,
+            "skin_sunflower":true,
+            "skin_sunset":true,
+            "skin_tango":true,
+            "skin_warm":true,
+            "skin_winter":true,
+            "skin_woman":true,
+            "skin_worldCupRussia":true,
+            "skin_youthDefault":true,
+            "skin_youthExam":true,
+            "skin_youthMiku":true
+        };
+    try{
+        if (document.documentMode && document.documentMode < 10) {
+            HIDDEN_SKIN.skin_claritDawn = true;//换回默认皮肤
+            HIDDEN_SKIN.skin_claritDreamLeaf = true;
+            HIDDEN_SKIN.skin_claritSideRiver = true;
+        };
+    }catch(e){
+        console.log(e)
+    }
+    
+    function isAlternateSkin(skin_name){
+        var alternateSkin = ['skin_claritFlower','skin_claritForest','skin_claritSunset'];
+        var len = alternateSkin.length;
+        for (var i = 0; i < len; i++){
+            if (skin_name === alternateSkin[i]) {
+                return true;
+            };    
+        } 
+        return false; 
+    }
+
+    function nowTimeForAlternateSkin(){
+        var now = new Date();
+        var nowHours = now.getHours();
+        if(nowHours >= 6 && nowHours < 14){
+            return 0;
+        } else if (nowHours >= 14 && nowHours < 22){
+            return 1;
+        } else{
+            return 2;
+        }
+
+    }
+    //根据皮肤名称和时间选择样式
+    function chooseAlternateSkin(skin_name){
+        var skin_claritFlower = ['skin_claritFlower','skin_claritSky','skin_claritTifany'];
+        var skin_claritForest = ['skin_claritForest','skin_claritGrass','skin_claritLeaf'];
+        var skin_claritSunset = ['skin_claritWave','skin_claritSunset','skin_claritUniverse'];
+        var nowtime = nowTimeForAlternateSkin();
+        switch(skin_name){
+            case 'skin_claritFlower' :
+                return skin_claritFlower[nowtime];
+                break;
+            case 'skin_claritForest' :
+                return skin_claritForest[nowtime];
+                break;
+            case 'skin_claritSunset' :
+                return skin_claritSunset[nowtime];
+        }
+
+    }
+
+    (function () {
+		//setTimeout(function(){
+		
+		 var list = [];
+        // 2.3版本默认皮肤为skin_lightblue
+        // 皮肤“云端”已经下线
+        var skinPath = getCookie("SkinPath2");
+        
+        if (!/^skin_\w+$/.test(skinPath) || HIDDEN_SKIN[skinPath]) {
+            if(typeof HIDDEN_SKIN[skinPath] =="string"){
+                skinPath=HIDDEN_SKIN[skinPath] //皮肤映射
+            }else{
+                skinPath = "skin_lightblue";
+            }
+        } else if (skinPath == 'skin_normal') {
+            skinPath = getCookie("cookiepartid") == 1 ? "skin_red" : "skin_lightblue";
+        }
+
+        // 根据当天时间段变化的皮肤，进行匹配
+        if(isAlternateSkin(skinPath)){
+            skinPath = chooseAlternateSkin(skinPath);
+        }
+
+        list.push('skin/' + skinPath + '.css');//skin_normal_index.html.pack.css
+        
+        //先去掉皮肤
+        loadCSS(list, document);
+        
+		document.cookie = "_139_login_version=60;path=/;domain=mail." + document.domain+";expires="+new Date(new Date().getTime()+31536000000).toGMTString()+";";
+		//}, 2000);
+
+    })();
+    
+</script>
+
+
+
+<div class="headerTopMenu clearfix" id="top">
+    
+    <a href="javascript:$App.show('welcome');" class="mailLogo_new_icon" bh="top_logo"><i class="iconfont i-maillogo"></i>
+	   
+	</a>
+
+
+	<ul id="toFixTabs" class="newMenu">
+		<li id="toptab_welcome" name="welcome" channel="welcome"><a href="javascript:$App.showChannel('welcome')"><i>首页</i></a></li>
+		<li id="toptab_mailbox" name="mailbox_1" channel="mail" bh="top_mail"><a href="javascript:$App.showChannel('mail')"><i>邮件</i></a></li>
+		<li id="toptab_addr" name="addr" channel="addr"><a href="javascript:$App.showChannel('addr')"><i>通讯录</i></a></li>
+		<li id="toptab_calendar" name="calendar" channel="calendar"><a href="javascript:$App.showChannel('calendar')"><i>日历</i></a></li>
+        <li id="toptab_diskdev" name="diskDev" channel="disk"><a href="javascript:$App.showChannel('disk')" bh="top_disk"><i>彩云网盘</i></a></li>
+        <li id="toptab_workbench" name="workbench" channel="workBench" bh="click_nav_workbench"><a href="javascript:$App.show('workBench')"><i>工作台</i></a></li>
+		<li id="toptab_googSubscription" name="googSubscription" channel="subscribe"><a href="javascript:$App.showChannel('subscribe')" bh="top_mpost"><i>云邮局</i></a></li>
+		<li id="top_bussinessoffice" name="billCharge" style="display:none" channel="billCharge"><a href="javascript:$App.show('billCharge')" bh="top_billCharge">邮箱营业厅</a></li>
+		<li id="iMobile" name="OfficalAPP" class="officialApp dkSkin" style="padding:0 15px;margin-left: 20px;margin-top:2px;" bh="officalApp_cliorhov">
+                <a href="javascript:;" style="height:30px;line-height: 30px;">官方APP</a>
+                <div class="tips qrcodedownload" id="i_qrcode" style="position:absolute;top:42px;left:-184px;z-index:999;display:none;padding:0;">
+                    <div style="padding:24px 50px 14px;box-sizing:border-box;text-align:center;" code="web_303">
+                        <img src="/m6/images/global/code/139clientApp.png?v=20210407" style="vertical-align:top;overflow:hidden;">
+                        <div style="font-size:14px;color:#333;padding:7px 0 3px;">扫码下载139邮箱APP</div>
+                        <div style="font-size:14px;">
+                            <a bh="topnav_click_moreclient" href="https://logininterface.mail.10086.cn/download/index.html" target="_blank" style="color:#1385ee;line-height: 20px;height: 20px;">更多客户端下载</a>
+                        </div>
+                    </div>
+                    <div style="padding:0 20px 0;box-sizing:border-box;width:100%;height:60px;border-radius:0 0 5px 5px;background-color:#f3f3f3;" code="web_304">
+                        <img src="/m6/images/global/code/heCloud.png" style="margin-right:10px;float:left;vertical-align:top;overflow:hidden;margin-top: 12px;">
+                        <div style="width:160px;float:left;margin-top: 10px;">
+                            <div style="font-size:14px;font-weight: bold;color:#333;">139邮箱、和彩云融合版</div>
+                            <div>
+                              <a bh="topnav_click_downloadPC" href="https://logininterface.mail.10086.cn/download/index08.html" target="_blank" style="color:#1385ee;line-height:20px;height: 20px;">下载PC版</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tipsTop" style="top:-6px;left:88%;margin-left:0px;"></div>
+                </div>
+            </li>
+            <style>
+                  .officialApp.dkSkin{
+                        background: rgba(255,255,255,.15);
+                        border-radius: 50px;
+                  }
+                  .officialApp.dkSkin:hover{
+                        background:rgba(255,255,255,.25);
+                  }
+                  .officialApp.ltSkin{
+                        background:rgba(255,255,255,.5);
+                        border-radius: 50px;
+                  }                    
+                  .officialApp.ltSkin:hover{
+                        background:rgba(255,255,255,.6);
+                  }                  
+            </style>            
+    </ul>
+    <ul class="newLogoInfo">
+		<li class="newLogoInfo_li" style="visibility:hidden;" id="sendFileStatus" style="padding-right:0;_margin-top:6px;">
+			<a href="javascript:void(0)"  class="newLogoInfo_a mr_15"><i class="i-fileSendPercentage iconfont i-synchronous"></i></a>
+			<div style="z-index:5000;display:none;" class="tipsOther">
+				<p class="tips-text" style="width: 125px">点击查看文件发送详情</p>
+				<span class="tipsTop diamond"></span>
+			</div>
+		</li>
+        <li class="newLogoInfo_li" style="display: none;" id="uploadFileStatus" style="padding-right:0;_margin-top:6px;">
+            <a href="javascript:void(0)"  class="newLogoInfo_a mr_15"><i class="i-attSendstart"><i class="iconfont i-groupcon1"></i><i class="iconfont i-groupcon2 i-attSendstarts"></i><i class="i-red" style="display:none"></i></i></a>
+            <div style="z-index:5000;display:none;" class="tipsOther">
+                <p class="tips-text" style="width: 125px">点击查看文件上传详情</p>
+                <span class="tipsTop diamond"></span>
+            </div>
+        </li>
+        <li id="helpLi" class="newLogoInfo_li">
+                <a href="javascript:;" class="newLogoInfo_a" bh="top_help" title="帮助">
+                        <i class="iconfont i-help"></i>
+    
+                </a>
+                <div class="menuPop J-dropdown hide" style="position:absolute;top:40px;right:-7px;z-index:9001;width:200px;" bindautohide="1">
+                    <ul>
+                        <li><a href="javascript:;" id="smartService"><i class="iconfont i-service" style="position: absolute;left: 18px;color: #666;"></i>智能客服</a></li>
+                        <li index="1"><a bh="top_setting_help_center" href="javascript:;" id="helpcenter" target="_blank"><i class="iconfont i-help" style="position: absolute;left: 18px;color:#666;"></i>帮助中心</a></li>
+                        <li index="2" target="account_areaSign" statistical="top_setting_sign"><a bh="top_setting_feedback" href="javascript:;" id="feedback" target="_blank" title="意见反馈"><i class="iconfont i-mail" style="position: absolute;left: 18px;color:#666"></i>邮箱意见反馈</a></li>
+                        <li index="3"><a  href="http://online.10086.cn/module/accept.html#/" target="_blank"><i class="iconfont i-cmcc" style="position: absolute;left: 18px;color:#666;"></i>中国移动服务监督</a></li>
+                        <li index="4"><a bh="top_setting_update_log" href="http://help.mail.10086.cn/statichtml/1/Category/39/Listh_1.html" target="_blank" bh="welcomeb_log"><span class="text"><i class="dib">更新日志</i></span></a></li>
+                        <li index="5"><a bh="" href="javascript:top.$App.show('selfSearch');" target="_self"><span class="text"><i class="dib">自助查询</i></span></a></li>
+                        <li index="6"><a bh="top_setting_formal_twitter" href="http://e.weibo.com/139yx" target="_blank"><span class="text"><i class="dib">官方微博</i></span></a></li>
+                        <li class="code_style" style="margin-top: 10px;">
+						   <a>
+						       <span><img src="../images/temp/139mail_weixin.png" alt="139邮箱官方微信"></span>
+							   <p>微信关注<br>享更多服务</p>
+						   </a>
+						</li>
+                    </ul>
+					<div class="tipsTop" style="top:-6px;left:85%;"></div>
+                </div>
+        </li>
+
+        <li id="userCenterLi" class="newLogoInfo_li" bh='top_user_center' style="display:none">
+            <a id="userCenter" href="javascript:void(0);" class="newLogoInfo_a" target="_blank" bh="top_user_center">
+			    <i>云钱包</i>
+	        </a>
+        </li>
+        <!--
+        <li id="chooseVipMail" class="newLogoInfo_li" style="">
+            <i class="icons i-hot-tag"></i>
+            <a href="javascript:void(0)" manualBh="topBar_vipmailCenter_click" class="newLogoInfo_a" title="升级服务">
+                    <i class="iconfont i-upgdate-serv"></i>
+            </a>
+            <div class="menuPop shadow JSaddr_more hide" style="top: 36px; left: -85px; z-index: 9001; width: 180px; position: absolute; display: block;" bindautohide="1">
+                <ul></ul>
+				<div class="tipsTop" style="top:-6px;left:54%;"></div>
+            </div>
+        </li>-->
+		<li id="mailSetLi" class="newLogoInfo_li">
+			<a href="javascript:void(0)" class="newLogoInfo_a" title="设置">
+                
+                    <i class="iconfont i-set"></i>
+            </a>
+			<div class="menuPop J-dropdown hide" style="position:absolute;top:40px;right:0;z-index:9001;width:200px;" bindautohide="1">
+				<ul>
+					<li index="1" target="preference" statistical="top_setting_plain"><a bh="top_setting_set" href="javascript:;"><span class="text"><i class="iconfont i-set"  style="position: absolute;left: 18px;color:#666;"></i><i class="dib">常规设置</i></span></a></li>
+                    <li index="2" target="setDefaultTabEntry" statistical="top_setting_index"><a bh="set_default_tab" href="javascript:;"><span class="text"><i class="dib">默认主页</i></span></a></li>
+                    <li index="3" target="account_accountSet" statistical="top_setting_info"><a bh="top_setting_set" href="javascript:;"><span class="text"><i class="dib">帐户信息</i></span></a></li>
+                    <li index="4" target="account_areaSign" statistical="top_setting_sign"><a bh="top_setting_set" href="javascript:;"><span class="text"><i class="dib">邮件签名</i></span></a></li>
+                   
+                    <li index="5" id="" ><a bh="" href="javascript:$App.switchVersion('25');"><span class="text">切换到邮箱3.0</span></a></li>
+                    <li index="6" target="changeSkin" id="standardTopSkin" style="display: none"><a bh="top_setting_set" href="javascript:;"><span class="text"><i class="iconfont i-changeskin" style="position: absolute;left: 18px;color:#666;"></i><i class="dib">换肤</i><img src="/m6/images/global/iconNew.png" style="position: absolute;top: 5px;right: 104px;"/></span></a></li>
+                    <li index="7" target="youth_changeSkin" id="youthTopSkin" style="display: none"><a bh="top_setting_set" href="javascript:;"><span class="text"><i class="icons i-set-skin"></i><i class="dib">换肤</i></span></a></li>
+				</ul>
+				<div class="tipsTop" style="top:-6px;left:89%;"></div>
+            </div>
+            <style>
+                #setDefaultTab .i-pull{
+                   color:gray;
+                }
+            </style>
+			<div id="setDefaultTab" class="newMenuMore">
+				<div id="setDefaultTabDiv" class="boxIframe J-dropdown hide" style="right: -38px; top: 9px; width:274px; cursor: default;z-index:5000;">
+					<div class="boxIframeMain">
+						<div class="boxIframeText">
+							<div class="norTips clearfix">
+								<label>登录后默认进入的主页：</label>
+								<div id="defaultTabSel" style="display:inline-block;width:76px;">
+									
+								</div>
+							</div>
+						</div>
+						<div class="boxIframeBtn">
+							<span class="bibText"></span>
+							<span class="bibBtn">
+								<a href="javascript:void(0)" id="setDefaultTabConfirm" class="btnSure">
+									<span>确 定</span>
+								</a>
+								<a href="javascript:void(0)" id="setDefaultTabCalcel" class="btnNormal">
+									<span>取 消</span>
+								</a>
+							</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</li>
+        
+
+        <li class="newLogoInfo_li" id="mailNotifyIcon"  style="">
+                <a class="dominance_a" href="javascript:;" bh="mailnotify_tip_icon_click" title="短信提醒">
+                    <!--默认关闭，开启追加opening, 夜晚night-->
+                    <!--<i class="closing opening"></i>-->
+                    <i class="iconfont i-remind"></i>
+                </a>
+        </li>
+        <li class="newLogoInfo_li">
+
+        <div id="accountSet" class="">
+            <a href="javascript:;" class=""><img class='user_login_photo' src='/m6/images/global/face.png'></a>
+
+        </div>
+        </li>
+
+		<li id="togAudioBox" class="newLogoInfo_li off" style="display: none;">
+            <a href="javascript:void(0);" class="i_musicIco newLogoInfo_a iconfont i-music"></a>
+            <span class="newLogoInfo_aBox">
+                <i class="musicBox">
+                    <i class="item_list"></i>
+                    <i class="item_list"></i>
+                    <i class="item_list"></i>
+                    <i class="item_list"></i>
+                </i>
+            </span>
+		</li>
+	</ul>
+    <div class="searchWrap" id="searchContainer">
+            <div class="bubblePop" id="emptySearchTip" style="position:absolute;left:0px;top:35px;z-index:1001;display:none;"><div class="inner">请输入关键词</div><div class="TriangleTop" style="right:-11px"></div></div>
+            <div class="searchContent searchContentOn"><!--点击时背景变成白色加上 searchContentOn -->
+                    <div style="border:0;background:none;float:left;" id="diskDev_dropDown" class="storageBox">
+                    
+                    </div>
+                <input type="text" value="搜索关键词" oldvalue="搜索关键词"  maxlength="100" style="color: gray" class="searchInput" id="tb_mailSearch" autocomplete="off" bh="top_searchinput_click"/>
+                <span class="searchLeft "></span> 
+                <!-- loading 的时候加上 searchLoading -->        
+                <span id="searchIcon" class="iconfont i-pull"></span>
+            <!-- 输入时图标变成回车加上 searchEnter -->
+                <a href="javascript:;" class="write-voice" id="btn_foiceSearch">
+                        <i class="iconfont i-voice"></i>
+                </a>
+                <a href="javascript:;" class="write-magnifier" id="searchBtnIcon">
+                        <i class="iconfont i-search"></i>
+                </a>
+            </div>
+            <div id="searchMenu" class="menuPop shadow mailSearchboolBar hide" style="z-index: 1001;">
+                <ul>
+            <li><a href="javascript:" class="" id="op_mail" field="allmail"><i class="iconfont i-mail"></i>包含<strong>关键词</strong>的邮件</a></li>
+            <!--<li><span class="listTop" id="op_mail"><i class="i_s_mail"></i>包含<strong>关键词</strong>的邮件</span></li>-->
+            
+            <li><a href="javascript:" id="op_from" field="from"><i class="i_s_space"></i><span class="gray">发件人:</span><strong>关键词</strong></a></li>
+            
+            <li><a href="javascript:" id="op_to" field="to"><i class="i_s_space"></i><span class="gray">收件人:</span><strong>关键词</strong></a></li>
+            
+            <li><a href="javascript:" id="op_subject" field="subject"><i class="i_s_space"></i><span class="gray">主&nbsp;&nbsp;题:</span><strong>关键词</strong></a></li>
+            
+            <li id="li_op_subject_content"><a href="javascript:" id="op_subject_content" field="subject_content"><i class="i_s_space"></i><span class="gray">主题+正文:</span><strong>关键词</strong></a></li>
+            
+            <li id="li_op_all"><a href="javascript:" id="op_all" field="all"><i class="i_s_space"></i><span class="gray">全文搜索:</span><strong>关键词</strong></a></li>
+
+            <li><a href="javascript:" onclick="BH('top_searchattachfile')" id="op_attach" filterName="attachName" bh="top_searchattachfile"><i class="iconfont i-attachment"></i>包含<strong>关键词</strong>的附件</a></li>
+
+            <li id="li_op_attach_name"><a href="javascript:" id="op_attach_name" filterName="attachName"><i class="i_s_space"></i><span class="gray">附件名：</span><strong>关键词</strong></a></li>
+
+            <li id="li_op_attach_from"><a href="javascript:" id="op_attach_from" filterName="from"><i class="i_s_space"></i><span class="gray">发件人：</span><strong>关键词</strong></a></li>
+
+            <li id="li_op_attach_subject"><a href="javascript:" id="op_attach_subject" filterName="subject"><i class="i_s_space"></i><span class="gray">邮件主题：</span><strong>关键词</strong></a></li>
+            
+            <li><a href="javascript:" onclick="BH('top_searchcontacts')" id="op_contact" bh="top_searchcontacts"><i class="iconfont i-people"></i>包含<strong>关键词</strong>的联系人</a></li>
+
+            <li><a href="javascript:" id="op_calendar"><i class="i-create"></i>公开日历名称:<strong>关键词</strong></a></li>
+
+            <li><a href="javascript:" id="op_calendar_activity"><i class="i-create"></i>活动主题:<strong>关键词</strong></a></li>
+
+            
+            <li id="li_op_disk"><a href="javascript:" id="op_disk"><i class="i_s_wep"></i>包含<strong>关键词</strong>的彩云网盘文件</a></li>
+            
+            <li id="li_op_tempStorage"><a href="javascript:" onclick="BH('top_searchtemporary')" id="op_tempStorage" bh="top_searchtemporary"><i class="i_s_sark"></i>包含<strong>关键词</strong>的暂存柜文件</a></li>
+            
+            <li><a href="javascript:" onclick="BH('top_searchnews')" id="op_googSubscription" bh='top_searchnews'><i class="iconfont i-subscribe"></i>包含<strong>关键词</strong>的报刊、服务</a></li>
+            <li><a href="javascript:" id="everyOneSearch"><i class="i_c-search"></i>大家都在搜:</a></li>
+            <li><a href="javascript:" class="searchAD"></a></li>
+            <li><a href="javascript:" class="searchAD"></a></li>
+            <li><a href="javascript:" class="searchAD"></a></li>
+            <li class="full-search" onclick="BH('open_search_all')" id="li_open_all"><a href="javascript:" id="open_all" bh="open_search_all" >开通全文检索</a></li>
+            <li class="line"></li>
+            <li><a href="javascript:" id="btn_searchAdvance"><b class="c_666">高级搜索</b></a></li>
+                    
+                </ul>
+            </div>
+            <div id="attachAdvanceSearch" class="tips tips-attsearch" style="position:absolute;top:33px;_top:72px;left:0;right:14px;z-index:3001;display:none;">
+                <a href="javascript:" class="delmailTipsClose" style="display:none;">
+                    <i class="i_u_close"></i>
+                </a>
+                <div class="tips-text">
+                    <div class="tips-text-div">
+                        <fieldset>
+                            <legend class="hide">附件夹高级搜索</legend>
+                            <ul class="form">
+                                <li class="formLine">
+                                    <label class="label">所在文件夹：</label>
+                                    <div class="hankA element">
+                                        <div id="attach_folders">
+                                            
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="formLine">
+                                    <label class="label">附件名：</label>
+                                    <div class="hankA element">
+                                        <input id="attach_name" type="text" class="ipt-text">
+                                    </div>
+                                </li>
+                                <li class="formLine">
+                                    <label class="label">发件人：</label>
+                                    <div class="hankA element">
+                                        <input id="attach_sender" type="text" class="ipt-text">
+                                    </div>
+                                </li>
+                                <li class="formLine">
+                                    <label class="label">邮件主题：</label>
+                                    <div class="hankA element">
+                                        <input id="attach_subject" type="text" class="ipt-text">
+                                    </div>
+                                </li>
+                                <li class="formLine">
+                                    <label class="label">时间范围：</label>
+                                    <div class="hankA element">
+                                        <div id="attach_timeRange">
+                                        </div>
+                                    </div>    
+                                </li>
+                                <li class="formLine" id="attach_customTime" style="display:none;">
+                                    <label class="label">&nbsp;</label>
+
+                                    <div id="attach_timeTip" class="tips" style="position: absolute; z-index: 999; padding: 5px; width: 146px; left: 82px; top: -37px;display:none;">
+                                        <div class="tips-text EmptyTipsContent">
+                                         开始日期不能晚于结束日期
+                                        </div>
+                                        <div class="tipsBottom diamond" style=""></div>
+                                    </div>
+
+                                    <div class="hankA element">
+                                        <input id="attach_startTime" type="text" class="ipt-text ipt-date">
+                                        <span class="mlr_4">至</span>
+                                        <input id="attach_endTime" type="text" class="ipt-text ipt-date">
+                                    </div>
+                                </li>
+                            </ul>
+                        </fieldset>
+                    </div>
+                </div>  
+                <div class="boxIframeBtn" style="position:relative;overflow:hidden;">
+                    <span class="bibText"></span>
+                    <span class="bibBtn">
+                        <a id="attach_searchBtn" href="javascript:;" class="btnG icoG">
+                            <span>确 定</span>
+                        </a> 
+                        <a id="attach_cancelBtn" href="javascript:;" class="btnTb icoTb">
+                            <span>取 消</span>
+                        </a>
+                    </span>
+                </div>
+                <div class="tipsTop diamond" style="display:none;">
+                </div>
+            </div>
+        </div>
+
+	
+	<iframe id="audioBox" src="about:blank" frameborder="0" class="musicPop shadow" style="height: 284px; width:240px;position:absolute;right:10px;_right:10px; top:65px;display:none;z-index: 10;"></iframe>
+</div>
+<div id="mainContentBox" class="bodyBg Loading_Hidden" style="">
+    <div class="header" id="header" style="display:none">
+        <div class="headerInner clearfix">
+            <div class="personalInformation">
+                <ul class="personalInformation_ul">
+                    <li class="personalInformation_li" id="mailNotifyIcon" style="display:none">
+                        <a class="dominance_a" href="javascript:;" bh="mailnotify_tip_icon_click">
+                            <!--默认关闭，开启追加opening, 夜晚night-->
+                            <i class="closing" ></i>
+                        </a>
+                    </li>
+                   
+                    
+                </ul>
+            <!--<a id="guide_gift" bh="guide_open_popup" class="headerInner-gift" style="display: none ;"><img src="../images/global/box.gif"></a>-->
+            </div>
+           
+        </div>
+    </div>      
+    <div class="sub" id="sub" style="display:none;">
+        <div class="i-app-contact  i-app-garden" id="applistsIcon" style="opacity:0;left:15px;">
+            <div id="appListIcon" class="i-app-icon ta_av" style="display: none;">
+                <i class="iconfont i-plaza"></i>
+            </div>
+            <!-- <i class="addot" style="float: right;margin-right: 4px;margin-top: 3px;display:none;"></i> -->
+        </div>
+    	<div class="readWrite_bg">
+    		
+            <div class="readWrite read_write_btn">
+                <a hidefocus href="javascript:;" class="redBtn" id="btn_compose" bh="left_compose" style="width:170px;">
+                    <span>写信</span>
+                </a> 
+            </div>
+        </div>
+        <!-- 莫名小黄条 -->
+    	<div class="smsNetTip" id="smsNetTip" style="display:none">
+    	</div>
+        <!-- <div class="skintopBg"></div> -->
+        <!--满足条件显示滚动条-->
+        <div class="subList sweb" id="sb_h" style="">
+        	<textarea id="template_folderMain" style="display:none">
+          	<!--item start-->
+                <ul id="subListcon">
+                    <li id="li_mailbox" fid="1" >
+                    <a hidefocus="" style="" href="javascript:;" fid="1" bh="left_inbox" title="$inbox.title" class="mail-list-bold">
+                            <span>收件箱$inbox.count</span>
+                            <!--<i class="iconfont i-set" id="setmore" title="快捷设置入口"></i>-->
+                        </a>
+                    </li>
+                    <li id="li_remind" style="$task.style" part="one" sort="a">
+                        <a bh="left_remind" hidefocus href="javascript:;" title="$task.title">
+                            <i class="iconfont i-pending"></i><span>稍后处理 $task.count </span>
+                            <!-- <i class="i_set" style="display:none" id="btn_setCustom_task" onclick="return false" title="快捷设置入口"></i> -->
+                            <i class="iconfont i_nail" title=""></i>
+                        </a>
+                    </li>
+                    <li id="li_vip" style="display:none;" part="one" sort="b">
+                        <a href="javascript:;" bh="click_vip_mail" title="$vip.title">
+                            <i class="iconfont i-vip"></i><span>VIP邮件$vip.count</span> 
+                            <!-- <i class="i_set" style="display:none" id="" onclick="return false" title="快捷设置入口"></i> -->
+                            <i class="iconfont i_nail" title=""></i>
+                        </a>
+                    </li>
+                    <li id="li_star" style="$star.style" part="one" sort="c">
+                        <a bh="left_star" hidefocus href="javascript:;" title="$star.title">
+                            <i class="iconfont i-star"></i><span>星标邮件$star.count </span>
+                            <!-- <i class="i_set" style="display:none" id="" onclick="return false" title="快捷设置入口"></i> -->
+                            <i class="iconfont i_nail" onclick="return false" title=""></i>
+                        </a>
+                    </li>
+                    <li id="oneStop_mail" bh="" style="" part="one" sort="d">
+                        <a hidefocus title="一站式" href="javascript:;" bh="onestand_leftside">
+                            <i class="iconfont i-cmcc"></i><span>一站式</span>
+                            <!-- <i style="display:none;" class="i_set" id="" onclick="return false" title="快捷设置入口"></i> -->
+                            <i class="iconfont i_nail" title=""></i>
+                        </a>
+                    </li>
+                    <li id="li_mobilelife" style="" part="one" sort="j">
+                        <a hidefocus title="移动生活" href="javascript:;">
+                            <i class="iconfont i-mobilelife"></i><span name="textArea">移动生活</span>
+                            <i class="iconfont i_nail" title=""></i>
+                        </a>
+                    </li>  
+                    <li id="list_invoice" style="$listmaill.style" part="one" sort="e">
+                        <a href="javascript:;" title="电子发票" bh="invoice_myapp">
+                            <i class="iconfont i-einvoice"></i><span>电子发票</span>
+                            <!-- <i class="i_set" id="" onclick="return false" title="快捷设置入口"></i> -->
+                            <i class="iconfont i_nail" title=""></i>
+                        </a>
+                    </li>
+                    <li id="list_official" bh=""  style="" part="one" sort="f">
+                        <a hidefocus  title="企业服务号" href="javascript:;" bh="Official_home">
+                            <i class="iconfont i-enterprise-serv"></i><span>企业服务号</span>
+                            <!-- <i style="display:none;" class="i_set" id="" onclick="return false" title="快捷设置入口"></i> -->
+                            <i class="iconfont i_nail" title=""></i>
+                        </a>
+                    </li>
+                    <li id="li_subscribe" style="" part="one" sort="g">
+                        <a bh="left_subscribe" title="精彩订阅" hidefocus href="javascript:;" title="$subscribe.title">
+                            <i class="iconfont i-subscribe"></i><span>精彩订阅</span>
+                            <!-- <i class="i_set" id="" onclick="return false" title="快捷设置入口"></i> -->
+                            <i class="iconfont i_nail" title=""></i>
+                        </a>
+                    </li>
+                    <li id="ads_maill" style="$adsmaill.style" part="one" sort="h" bh="folder_click_adMail">
+                        <a href="javascript:;" title="$adsmaill.title">
+                            <i class="i-ad-mail"></i><span>广告邮件$adsmaill.count</span>
+                            <!-- <i class="i_set" id="" onclick="return false" title="快捷设置入口"></i> -->
+                            <i class="iconfont i_nail" title=""></i>
+                        </a>
+                    </li>
+                    <li id="li_onlinedoc" style="" part="one" sort="i">
+                        <a hidefocus title="在线文档" href="javascript:;" bh="leftnav_click_onlinedoc">
+                            <i class="iconfont i-doconline"></i><span name="textArea">在线文档</span>
+                            <i class="iconfont i_nail" title=""></i>
+                        </a>
+                    </li>                                           
+                <!--item end-->
+            </ul>
+                
+            </textarea>
+            <div class="subListScroll" id="sidebar" style="">
+        		<span class="subListScrollTop" style="display:none"></span>
+        		<div class="subListScrollCon" style="">
+                    <div class="jscroll-c" style="position: relative; padding-right:0 !important;">
+                        <ul class="big" id="folder_main">
+                            <li fid="1">
+                              <a hidefocus="" style="" href="javascript:$App.showMailbox(1);" fid="1" bh="left_inbox">
+                                  <span>收件箱</span>
+                              </a>
+                            </li>
+
+                            <li id="li_remind" style="$task.style"><a bh="left_remind" hidefocus href="javascript:appView.searchTaskmail()" title="$task.title"><i class="i_cDon"></i>待办任务</a></li>
+
+                            <li id="li_vip"><a href="javascript:appView.searchVip()" bh="click_vip_mail" title="$vip.title"><i class="user_vip"></i><span>VIP邮件</span></a></li>
+
+                            <li id="li_star" style="$star.style"><a  bh="left_star" hidefocus href="javascript:appView.searchMail({flags:{starFlag:1}})" title="$star.title"><i class="i_starM_y"></i><span>星标邮件</span></a></li>
+
+                            
+                            <li id="li_draftbox" fid="2" style="$draft.style"><a bh="left_draft" hidefocus title="$draft.title" href="javascript:void(0)" fid="2"><span class="ml_20">草稿箱</span></a></li>
+
+                            <li id="li_sendedbox" fid="3"  style="$sent.style"><a  bh="left_sent" hidefocus title="$sent.title" href="javascript:void(0)" fid="3"><span class="ml_20">已发送</span></a></li>
+
+                            <li fid="4"  style="$deleted.style"><a  bh="left_deleted" hidefocus title="$deleted.title" href="javascript:void(0)" fid="4"><span class="ml_20">已删除</span><i class="i_dels" id="btn_clear"></i></a></li>
+
+                            <li fid="8"><a href="javascript:$App.showMailbox(8);" fid="8">服务邮件</a></li>
+
+                        </ul>
+                        <ul class="big subListScrollLast" >
+                            <li id="tag_list" style="border-bottom: 1px solid rgba(255,255,255,.1);padding-bottom:15px;"></li>
+                            <li class="bottomLi" id="bottomLi-nd" style="margin:9px 0;"></li>
+                            <li id="customfolder_list"></li>
+                            <li class="bottomLi" id="bottomLi-td"></li>
+                            <li id="pop_list"></li>
+                        </ul>
+                    </div>
+
+                <div class="jscroll-e" unselectable="on" style="height: 100%; top: 0px; right: 0px; position: absolute;">
+                    <div class="jscroll-u" style="position: absolute;"></div>
+                    <div class="jscroll-h"  style="-moz-border-radius: 3px;  -webkit-border-radius: 3px; border-radius:3px; position: absolute; cursor:pointer;"></div>
+                    <div class="jscroll-d" style="position: absolute;"></div>
+                </div>
+                <!-- <div> 
+                    <ul class="big">
+                        <li>
+                            <a href="javascript:;" id="barmorelink" title="设置左侧导航栏展示状态">
+                                <span><i class="i-sidebar-set"></i>设置</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div> -->
+    	    </div>
+        </div>
+      </div>     
+    </div>
+    <!--<div class="skinBottomBg"></div>-->
+    
+    <div class="mainTop" style="left:200px;" id="divTab"><ul></ul></div>
+
+    <div id="appSpecial" class="appSpecial"  style="display: none;">
+        <div class="appspecial_wraper clearfix">
+            <div id="appList_full" class="apps_wraper_r">
+                <i class="icons i-app-trangle"></i>
+                <div class="apps_r_top">
+                    <i class="icons i-app-set iconfont i-set"></i>
+                </div>
+                <div class="apps_r_b">
+                    <ul id="appListBig" class="clearfix">
+                          
+                    </ul>
+                    <div class="apps-con" id="appListSmallDiv">
+                        <ul id="appListSmall" class="apps-list clearfix">
+                        </ul>
+                    </div>
+                </div>    
+            </div>
+        </div>
+    </div>
+    
+    <div class="main" id="main" style="*overflow:hidden;">
+        <div class="TransparentBg clearfix" id="div_main" style="background: transparent;">
+            <script>
+                if(window.name.indexOf("sid")==-1){
+                    window.TRIGGER_LIST=[],window.ON_LIST=[];
+                    window.$App={
+                        getSid:function (){
+                          return window.sid;  
+                        },
+                        trigger:function (key,obj){
+                            window.TRIGGER_LIST.push({key:key,val:obj});
+                            //console.warn("trigger",key,obj);
+                        },
+                        on:function (key,obj){
+                            window.ON_LIST.push({key:key,val:obj});
+                            //console.warn("on",key,obj)
+                        }
+                    }
+                    var homeUrl = "/m2012server/home?version=6&Protocol=" + encodeURIComponent(window.location.protocol);
+                    if(location.href.indexOf("/m2012/")>=0){
+                        homeUrl = "/m2012server/welcome?version=6&Protocol=" + encodeURIComponent(window.location.protocol);
+                    }
+                    if(SiteConfig.positionCode){
+                        homeUrl+="&positionCode="+SiteConfig.positionCode;
+                    }
+                    homeUrl+="&sid="+window.sid+"&from=preload";
+
+                    //var div=document.createElement("DIV");
+                    document.write('<div class="gload" id="div_welcome" style="display:none;"><iframe src="'+homeUrl+'" scrolling="auto" class="main-iframe" name="ifbg" frameborder="no" width="100%" allowtransparency="true" id="welcome_preload" style="height: 201px;"></iframe></div>')
+                    //document.body.appendChild(div);
+                    
+                }
+            </script>
+        </div>
+    	<div id="fetionElemTop" class="" title="飞信" style="display: none;">
+            <div class="fxdiva" id="fetionContainerId">
+            </div>     
+        </div>
+    </div>
+    <script>
+        m139LoadScript('libs.pack.js');
+        m139LoadScript('m139.core.pack.js')
+        m139LoadScript("m2012.ui.common.pack.js", document);
+    </script>
+    <script>
+        top.MusicBox = function(){
+            var VISIBLE = false;
+            var MUSIC_BOX_LOADED = false;
+            
+            var audioBox = $('#audioBox');
+            var toggleBtn = $("#togAudioBox");
+
+            return {
+                load: function(callback){
+                    if(audioBox.prop("src").indexOf(getRootPath()+"/html/music_box.html") != -1) return;
+                    audioBox.attr("src", getRootPath()+"/html/music_box.html");
+
+                    //warn 重新加载框架时，不要再引用回调
+                    audioBox.one("load", function(){
+                        console.log("music box loaded");
+                        MUSIC_BOX_LOADED = true;
+                        if(typeof callback == "function"){
+                            callback();
+                        }
+                    });
+                    top.addBehavior("music_box_load");
+                },
+                ready: function(){  // not a good name
+                    return MUSIC_BOX_LOADED;
+                },
+                addMusic: function(instantPlay, playList){
+                    var frameWin;
+                    if(audioBox.length < 1) return ;
+
+                    frameWin = audioBox[0].contentWindow;
+
+                    if(MUSIC_BOX_LOADED) {
+                        frameWin.onAddMusic(instantPlay, playList);
+                    } else {
+                        this.load(function(){
+                            frameWin.onAddMusic(instantPlay, playList);
+                        });
+                        toggleBtn.show();   // ...
+                    }
+                },
+                getMusicAddr: function(id, callback){
+                    M139.RichMail.API.call("disk:getFile", {fileId: id}, function (result) {
+                        var data = null;
+                        if(result && (data = result.responseData)) {
+                            callback(data["var"]);
+                        } else {
+                            callback(); // 无返回数据
+                        }
+                    });
+                },
+                show: function(){
+                    //if(VISIBLE) return ;
+                    audioBox.show();
+                    VISIBLE = true;
+                    var v = $App.getView("top");
+                    v && v.resetTopFixTabsCssAndDropdown(document.getElementById("audioBox"));
+                },
+                hide: function(onlyHideSelf){
+                    //if(!VISIBLE) return ;
+                    audioBox.hide();
+                    VISIBLE = false;
+                    if(onlyHideSelf){
+                        return;
+                    }
+                    var v = $App.getView("top");
+                    v && v.resetTopFixTabsCssAndDropdown(document.getElementById("audioBox"));
+                },
+                showPlayStatus: function(play) {
+                    if(play) {
+                        toggleBtn.removeClass("off").addClass("on");
+                    } else {
+                        toggleBtn.removeClass("on").addClass("off");
+                    }
+                },
+                toggle: function(){
+                    VISIBLE ? this.hide() : this.show();
+                },
+                changeSkin: function(){
+                }
+            };
+        }();
+
+        $("#togAudioBox").click(function(e){
+            e.preventDefault();
+            e.stopPropagation();
+            //MusicBox.ready() || MusicBox.load();
+            MusicBox.toggle();
+        });
+
+        setTimeout(function(){
+            $("#umcboxpluginbar, #umcboxpluginbar a").click(function(e){
+                MusicBox.hide();
+            });
+        }, 3000);   
+    </script>
+</div>    
+
+<div class="dRound skinPop" style="left:442px;top:36px; display:none;">
+    <div class="dRoundBody skinPopBody clearfix">
+    </div>
+    <div class="skinPopBtn"> <a class="btn-blue" href="javascript:void(0)"><span>保存</span></a> <a class="btn-black" href="javascript:void(0)"><span>取消</span></a> </div>
+</div>
+
+
+
+<div style="top:40px;left:4px;width:330px; z-index:9999; display:none" id="msgBox" class="tips tipsInfoBox ">
+    <div class="tips-text">
+        <div class="tipsInfoBox_title"><strong>通知</strong><a href="javascript:;" id="msgBoxEmpty" class="i_delb"></a></div>
+        <ul class="tipsInfoBox_list">            
+        </ul>
+    </div>
+    <span class="tipsTop5 diamond" style="left:139px;"></span>
+</div>
+<script>
+    (function () {
+	    // fix: 编辑器粘贴表格导致邮箱页面滚动不可见
+	    document.getElementById('mainContentBox').style.height = document.body.clientHeight - 36 + "px";
+        
+        // bugfix:解决ie6读信页空白的问题
+				if ($B.is.ie){
+						document.getElementById('main').style.height = document.body.clientHeight - document.getElementById('divTab').style.height  - 74 + "px";
+				}
+        
+        var skinPath = getCookie("SkinPath2");
+        if (!/^skin_\w+$/.test(skinPath) || HIDDEN_SKIN[skinPath]) {
+            skinPath = "skin_lightblue";
+        } else if (skinPath == 'skin_normal') {
+            skinPath = getCookie("cookiepartid") == 1 ? "skin_red" : "skin_lightblue";
+        }
+        var bgImg = document.getElementById('skinBgImg');
+        var skinBgSub = document.getElementById('skinBgSub');
+        //判别轮换皮肤
+        if(isAlternateSkin(skinPath)){
+            //skinPath = chooseAlternateSkin(skinPath);
+        }
+
+        changeOpacityBySkin(skinPath);
+    })();
+</script>
+<textarea id="template_maillist" style="display:none">
+    <!--newdayArea start-->
+    <!--section start-->
+    <div class="newdayArea">
+        <div class="daytableTitle">
+            <a href="javascript:;"><i class="i_new_minus"></i><span>@getSectionName</span></a>
+        </div>
+        <table class="dayAreaTable">
+            <colgroup>
+                <col class="td1">
+                <col class="td7">
+                <col class="td2">
+                <col>
+                <!--<col class="td5">-->
+                <col class="td3">
+                <col class="td4">
+            </colgroup>
+        <tbody>
+        <!--item start-->
+        <tr type="@getMailType()" name="@getName(from,to)" mid="$mid" sessionId="$mailSession" sendId="$sendId" receiveDate="@getReceiveDate()" @isFitAddCYun()>
+            <td class="td1">
+                <div class="p_static">
+                    <input type="checkbox" />@getPriority(priority)@getStatus()
+                </div>
+            </td>
+            <td class="td7">
+                <div class="maillist-atta">
+                    <i class="@getAttach()" title="@getAttachTitle()"></i>
+                </div>
+            </td>
+            <td class="td2">
+                <div class="mailForm">
+                    <span name="from" style="@getNameStyle()" class="@getRowStyle() @getSourceStyle()">@getNameFromCache(from,to)</span>@getPrettyNumberIcon() @getBusinessIcon() @getVipIcon() @getStrokeVIcon() @getNameType() @getVIPIconNew()
+                </div>
+            </td>
+            <td name="td_sub" class="tdtitle">
+                @getStarOrRemarkIcon()
+                <div class="mTitle">
+                <h3 class="@getRowStyle()" mid="$mid" mailnum="$mailNum">
+                    @getAtRemind()
+                            <a href='javascript:;' onClick="return false;" title="@getSubject(subject,1)" style='@getSubjectColor(color)' name="subject" folder="@getFolder(true)">
+                                @getFolder() @getSubject(subject) 
+                            </a>
+                            @getMailNum(true)
+                            @getRemarkIco()
+							@getVoiceMailPlayBtn()
+                            
+                </h3>
+                @getSummary(summary)
+                <div class="TagDiv">
+                    @getTagList(label)
+                </div>
+            </div>                
+            </td>
+            <!--<td class="td5" colspan="@addColspan()"></td>-->  
+            <td class="td3">
+			    @getMailTopIco()
+				<a class="mlr_3 i-tag" name="tagMenu" title="添加邮件标签" href="javascript:;" bh="mailbox_tag_open" style="display:none"><i class="iconfont i-tags"></i><span></span></a>
+                <span title="@getDate(sendDate,receiveDate,taskDate)">@getDate(sendDate,receiveDate,taskDate)</span>
+            </td>
+            <td class="td4" name="size"><a class="mlr_3 i-del" href="javascript:;" bh="click_delete_icon" style="display:none"><i class="iconfont i-delete"></i><span></span></a><span title="@getSize(size)">@getSize(size)</span></td>
+        </tr>
+        <!--item end-->
+        </tbody>
+        </table>
+    </div>
+    <!--section end-->
+    <div id="scrollTip2" style="display:none;float:left;text-align:center;width: 100%;margin-right: -150px;"><div style="width:200px;margin:auto;border: 1px solid gray;line-height:30px">滚动鼠标或点击，加载更多↓</div>
+    </div>
+     <div class="downPagenumBox clearfix" id="maillist_pager_bottom"></div> 
+	<div id="scrollTip2" style="display:none;float:left;text-align:center;width: 100%;margin-right: -150px;"><div style="width:200px;margin:auto;border: 1px solid gray;line-height:30px">滚动鼠标或点击，加载更多↓</div>
+    </div>
+    <div class="viewMore ta_c" style="display:none" id="scrollTip">
+        <img class="mr_5 loadingImg" src="../images/global/load.gif">正在加载，请稍候...
+    </div>
+</textarea>
+
+<!-- 误删除恢复文件夹模板_start add by xumei -->
+<textarea id="template_deresume_maillist" style="display:none">
+    <!--newdayArea start-->
+    <!--section start-->
+    <div class="newdayArea">
+        <table class="dayAreaTable">
+        <tbody>
+        <!--item start-->
+        <tr mid="$mid" sessionId="$mailSession" sendId="$sendId">
+            <td class="td1">
+                <div class="p_static">
+                    <input type="checkbox" /><i class="@getPriority(priority)"></i>
+                </div>
+            </td>
+            <td class="td2">
+                <div class="mailForm">
+                    <span name="from" class="@getRowStyle()">@getName(from,to)</span>@getPrettyNumberIcon()@getVipIcon()                      
+                </div>
+            </td>
+            <td name="td_sub" class="tdtitle">
+                <div class="mTitle">
+                <h3 class="@getRowStyle()" mid="$mid" mailnum="$mailNum">
+                            <a href='javascript:;' onClick="return false;" title="@getSubject(subject,1)" style='@getSubjectColor(color)' name="subject">
+                                @getSubject(subject) 
+                            </a>
+                </h3>
+                </div>    
+                    @getSummary(summary)
+                <div class="TagDiv">
+                
+                </div>
+            </td>
+            <td class="td3 td3-new">
+                <span title="@getDate(modifyDate,receiveDate,taskDate)" style="padding-right:16px;">@getDate(modifyDate,receiveDate,taskDate)</span>
+            </td>
+            <td class="td4 td4-new" name="size"><span title="@getDeleteType()">@getDeleteType()</span></td>
+        </tr>
+        <!--item end-->
+        </tbody>
+        </table>
+    </div>
+    <!--section end-->
+    <div id="scrollTip2" style="display:none;float:left;text-align:center;width: 100%;margin-right: -150px;"><div style="width:200px;margin:auto;border: 1px solid gray;line-height:30px">滚动鼠标或点击，加载更多↓</div>
+    </div>
+     <div class="downPagenumBox clearfix" id="maillist_pager_bottom"></div> 
+        <p style="line-height: 50px;font-size: 20px;display:none"><a href="javascript:" id="btn_nextPage">加载下一页</a></p>
+</textarea>
+<!-- 误删除恢复文件夹模板_end add by xumei-->
+
+<!-- 新三栏改动 added by tj -->
+<textarea id="template_maillist_left_new" style="display:none">
+  <!--section start-->
+  <div class="newdayArea"> <div href="javascript:" class="daytableTitle"><a><i class="i_new_minus"></i></i><span>@getSectionName</span></a></div> 
+
+      <table class="dayAreaTable">
+        <tbody>
+         <!--item start-->
+         <tr mid="$mid" sessionId="$mailSession" sendId="$sendId" receiveDate="@getReceiveDate()" @isFitAddCYun()>
+          <td name="td_new">
+              <div class="fl mail-motion">
+                <p>
+                    <input type="checkbox" />
+                </p>
+                <p>
+                    @getPriority(priority) @getStatus()
+                </p>
+              </div>
+              <div class="p_relative mail-infos">
+                <div class="mail-form" name="from">
+                    <span name="from" class="@getRowStyle()" style="@getNameStyle()">@getName(from,to)</span>@getPrettyNumberIcon()
+					@getStrokeVIcon() @getBusinessIcon() @getNewVipIcon() @getVIPIconNew()<i class="@getNewAttach()" title="@getAttachTitle()"></i>
+                </div>
+                <h2 class="mail-title" mid="$mid" mailnum="$mailNum" name="subject" style="width:90%;">
+                    @getAtRemind()
+                    <span class="@getRowStyle()" title="@getSubject(subject,1)" style='@getSubjectColor(color)' name="subject">@getSubjectNew(subject)</span>
+                </h2>
+
+                @getNewSummary(summary)
+
+                <div class="p_absolute mail-received-time">@getDate(sendDate,receiveDate,taskDate)</div>
+
+                <!--<div class="p_absolute mail-received-remark">@getNewMailNum()@getNew3RemindIco()<i class="@getNewStarIcon()" name="list_starmail"></i></div>-->
+                <div class="p_absolute mail-received-remark">@getNewMailNum() @getStarOrRemarkIcon()   @getTagList(label)
+                </div>
+              </div>
+          </td>
+        </tr>
+        <!--item end-->
+      </tbody>
+    </table>
+      <!--[if lt ie 8]></div><![endif]-->
+  </div>
+  <!--section end-->
+  <p style="line-height: 50px;font-size: 20px;display:none"><a href="javascript:" id="btn_nextPage">加载下一页</a></p>
+</textarea>
+
+
+<textarea id="template_maillist_left" style="display:none">
+        <!--[if lt ie 8]>
+    <div style='+zoom:1;position: relative;'><![endif]-->
+<table class="tableTitle" id="list_header">
+    <tbody>
+      <tr>
+        <td class="td1">
+            <div class="tdsel"><!-- 选中时加上 class="tdselOn" --><input type="checkbox" id="chk_mailist_all"/><i bh="mailbox_selectAllDrop" class="i_triangle_d" id="btn_checkMenu"></i> </div>
+        </td>
+        <td class="tdtitle"></td>
+        <td class="td6"><div class="tdsel"><!-- 选中时加上 class="tdselOn" --> 
+          <a href="javascript:" id="btn_sortMenu"><span>时间由新到旧</span><i class="i_triangle_d" ></i></a> </div></td>
+      </tr>
+    </tbody>
+  </table>
+    <!--[if lt ie 8]></div><![endif]-->
+  <!--section start-->
+  <div class="dayArea"> <a href="javascript:" class="daytableTitle"><i class="i_plusj i_minus"></i><span>@getSectionName</span></a> 
+            <!--[if lt ie 8]>
+    <div style='+zoom:1;position: relative;'><![endif]-->
+      <table class="dayAreaTable">
+         <!--item start-->
+         <tr mid="$mid" sessionId="$mailSession">
+          <td class="td1">
+          <div class="p_relative">
+                  <input type="checkbox" />@getPriority(priority)</i>@getStatus()<i class="@getAttach()"></i>
+          </div>
+          </td>
+
+          <td name="td_sub" class="tdtitle">
+
+<div class="mTitle mailForm mailForm-lr">
+              <p class="black"><span name="from" class="@getRowStyle()">@getName(from,to)</span>@getPrettyNumberIcon()@getVipIcon()</p>
+              <h3 class="@getRowStyle()" mid="$mid" mailnum="$mailNum"><a href='javascript:' onClick="return false;" title="@getSubject(subject,1)" style='@getSubjectColor(color) @getSubjectPadding()'  name="subject">@getSubject(subject) </a>@getMailNum(true) @getRemarkIco() </h3>
+              @getSummary(summary)  
+            </div></td>
+          <td class="td6"><p class="gray">@getDate(sendDate,receiveDate)</p>
+          
+              <div class="inboxWrapLeft_TagDiv">
+                 @getStarOrRemarkIcon() 
+                  @getTagList(label)
+                <div  id="list_ico_$mid">
+                <a href="javascript:" class="i_alarm" style="display:none"></a>
+                </div>
+                 
+           </td>
+        </tr>
+        <!--item end-->
+    </table>
+      <!--[if lt ie 8]></div><![endif]-->
+  </div>
+  <!--section end-->
+  <div id="scrollTip2" style="display:none;float:left;text-align:center;width: 100%;margin-right: -150px;"><div style="width:200px;margin:auto;border: 1px solid gray;line-height:30px">滚动鼠标或点击，加载更多↓</div>
+  </div>
+  <div class="viewMore ta_c" id="scrollTip" style="display:none">
+        <img class="mr_5 loadingImg" src="../images/global/load.gif">正在加载，请稍候...
+    </div>
+</textarea>
+<style>
+
+ 
+#mailSetLi ul a{
+  color: black !important;
+ }
+ 
+</style>
+    <ul class="leftFodderBoot">
+
+    <li class="leftFodderBoot_01" style="display:none">
+		<a href="javascript:;" class="leftFodderBoot_close" onclick="$(this).parent().hide()" style="top:15px;right:5px;"></a>
+	</li>
+	<li class="leftFodderBoot_02" style="display:none">
+		<a href="javascript:;" class="leftFodderBoot_close" onclick="$(this).parent().hide()" style="top:15px;right:0px;"></a>
+	</li>
+	
+</ul>
+
+
+
+<!--高级搜索start-->
+<div class="tips searchadvancepopup" id="popup_searchadvance" style="position:absolute;top:45px;left:auto;right:259px;z-index:1001;width:408px;display:none;" data-fix="1"> 
+	<a class="delmailTipsClose" href="javascript:" bh="advaceSearch_close"><i class="i_u_close"></i></a>
+  <div class="tips-text">
+    <div class="norTips" style="padding:0;">
+      <div class="norTipsContent searchadvance">	
+      </div>
+    </div>
+  </div>
+</div>
+<!--高级搜索end-->
+
+<div id="index_layer_mask" class="layer_mask hide" style="overflow: hidden; z-index: 5009; opacity: 0.5;"></div>	
+<div class="guideContainer guideIdx hide" id="div_old_to_new_guide">
+	<a class="guide_closeBtn" href="javascript:;" id="btn_old_guide_close" bh="old_welcome_show_close"></a>
+	<a class="guide_btnLink"  href="javascript:;"  id="btn_to_new_link" bh="old_welcome_show_click"></a>
+</div>
+
+<!-- 关闭动画flashBox添加class.hide -->
+<div id="animalFlash" class="flashBox hide">
+</div>
+
+
+<!--— 皮肤 —-->
+<div class="skin-struct">
+
+    <div class="skin-default-style"></div>
+    <div class="skin-default-top"></div>
+    <div class="skin-default-bottom"></div>
+    <div class="skin-head" style="display: block;"></div>
+    <!--— 有页签的模块addClass.offset-top，否则removeClass.offset-top —-->
+    <div class="skin-mainContainer offset-top" style="display: block;">
+        <div class="skin-aside"></div>
+        <div class="skin-main"></div>
+    </div>
+</div>
+
+<iframe id="downloadFrame" name="downloadFrame" style="display: none;"></iframe>
+<form id="downloadForm" name="downloadForm" action="" method="post" target="downloadFrame">
+	<input type="hidden" name="postData" value="">
+</form>
+
+</body>
+</html>
+<script>
+//m139LoadScript("m2012.matrixvm.pack.js", document); //已将m2012.matrixvm.pack.js合并到 index.html.pack.js
+
+
+m139LoadScript("index.html.pack.js", document);
+</script>
+<script>
+    IndexHTML.checkLoadSuccess();
+   
+</script>
+
+
+<script>
+    if(!(document.documentMode && document.documentMode<=8)){ //去掉ie8以下的上报，优化一点性能（richsdk每次采集都会获取宽高引起重绘，影响性能）
+		//登陆邮箱的账号，防止接口未返回导致无法获取用户信息
+		var loginUser = getCookie('Login_UserNumber') + '@' + ((window.SiteConfig && window.SiteConfig.mailDomain) || '139.com');
+		_udata.push(["setAccount", loginUser]);
+
+		//禁用自动上报
+		_udata.push(["setAutoPageView", false]);
+
+		var _aid = window.SiteConfig && window.SiteConfig.appid;
+		var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+		//document.write(unescape("%3Cscript src='" + getDomain("resource") + getRootPath()+"/js/packs/udata.js?v=20150408&aid=" + _aid + "' type='text/javascript'%3E%3C/script%3E"));
+    }
+</script>
+<script type="text/javascript">
+    function delCookie(name) {
+        var exp = new Date();
+        exp.setTime(exp.getTime() - 10000);
+        var cval=getCookie(name);
+
+        var NEWDOMAIN = "10086.cn";
+        var localhref = window.location.host;
+        if (/.*rd\./.test(localhref)) {
+            NEWDOMAIN = "10086rd.cn";
+        } else if (/.*ts\./.test(localhref)) {
+            NEWDOMAIN = "10086ts.cn";
+        } else if (/rd139cm\./.test(localhref)) {
+            NEWDOMAIN = "rd139cm.com";
+        }
+
+        if(cval) {
+            document.cookie=name+"="+cval+';path=/;domain=mail.'+NEWDOMAIN+";expires="+exp.toGMTString();
+        }
+    }
+
+    var sdk_login_key = '_139_index_login';
+    var indexLoginData = getCookie(sdk_login_key);
+    if (window.location.search.indexOf('indexLogin') > -1 && indexLoginData) {
+        var __cguid = indexLoginData.substr(13);
+        var __time = indexLoginData.substr(0,13);
+        top.window.sendUData('webp_login_click', ['login',__cguid,'','']);
+        var sdkInterval = new Date().getTime() - Number(__time);
+        top.window.sendUData('webp_login_loaded', ['login',__cguid,"S_OK",sdkInterval]); // status为S_OK代表成功,F_FAIL失败
+        delCookie(sdk_login_key);
+    }
+</script>
+<script>
+    /**-------------------缩小窗口时出现滚动条begin-----------------------------*/
+    var dBody = $(document.body);
+    // 屏幕宽度
+    var screenWidth = window.screen.width;
+    if (document.documentMode && document.documentMode < 9) {
+        dBody.addClass("minWidth_ie1024")
+    };
+    $(window).resize(function(){
+        window.innerWidthCache=window.innerWidth || document.body.clientWidth;
+        window.innerHeightCache=window.innerHeight || document.body.clientHeight;
+        var explorer = window.navigator.userAgent;
+        if(explorer.indexOf("Safari") == -1 && explorer.indexOf("MetaSr")>=0){
+            $(document).find("html").css("overflowX", "hidden");
+            console.log("缩放功能不支持搜狗浏览器兼容模式")
+            return }
+        // 邮箱整个界面的宽度
+        var minWidth=1235;
+        var winW = $D.getWinWidth() > minWidth ? $D.getWinWidth() : minWidth;
+        //alert(winW)
+        if (winW < screenWidth){
+          $(document).find("html").css("overflowX", "auto");
+          dBody.css({
+             //"overflowX": "auto",
+             "position" : "relative"// 兼容IE7,不然overflowX不起作用
+          }); 
+          if (document.documentMode && document.documentMode < 9 && winW > minWidth ) {
+            dBody.css("overflowX", "hidden");
+          };
+        }else{
+          dBody.css("overflowX", "hidden");
+          $(document).find("html").css("overflowX", "hidden");
+        }
+        if ( (document.documentMode && document.documentMode > 8)||!document.documentMode ) {
+            dBody.css("width", winW);
+        }
+        //dBody.css("width", winW > 1024 ? 100% : 1024); // 不加这行的话,有滚动条,但滚动条拉到右侧会有空格
+   });
+   /*-------------------缩小窗口时出现滚动条end-----------------------------*/
+</script>
+<script>
+    //判断是否为异网用户
+    (function(win){
+        if( !$User.isChinaMobileUser() ){
+            if(document.getElementById('header_personalInformation')){
+             var header_personalInformation = document.getElementById('header_personalInformation'),
+                   header_personalInformation_parent = header_personalInformation.parentNode,
+                   newDiv = document.createElement('div');
+             newDiv.className = 'MobileUserYellow';
+             newDiv.innerHTML = '因业务调整，2016年7月28日后，邮件到达短信提醒功能将暂停使用。';
+             
+             var timestamp = (new Date('2016-07-30')).getTime();
+             var nowstamp  = (new Date()).getTime();
+             if (nowstamp < timestamp) {
+                header_personalInformation_parent.appendChild(newDiv);
+             }
+            }
+        }
+    })(window);
+
+    
+</script>
+
+<style>
+
+
+</style>
