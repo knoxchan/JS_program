@@ -23,7 +23,7 @@ ctx = node.compile(open('./aipai.js', encoding='utf-8').read())
 
 functionName = f'md5("{password}")'
 result = ctx.eval(functionName)
-# print(result)
+print(result)
 
 # 4 构建请求头 发送登录请求
 headers = {

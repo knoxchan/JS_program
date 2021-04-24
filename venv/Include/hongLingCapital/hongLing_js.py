@@ -21,7 +21,7 @@ ctx = node.compile(open('./hongLing.js',encoding='utf-8').read())
 # 3 执行JS文件 反编译出密码
 functionName = f'getPwd("{password}")'
 result = ctx.eval(functionName)
-# print(result)
+print(result)
 
 # 构建请求头
 # data = {
