@@ -1,5 +1,3 @@
-
-
 import execjs
 import time
 import requests
@@ -8,12 +6,16 @@ import requests
 node = execjs.get()
 
 # 2 编译JS文件
-ctx = node.compile(open('./t.js', encoding='utf-8').read())
+ctx = node.compile(open('./t.js', encoding='GB18030').read())
 
-# password = "bOnqtWHqs4t32kZeWEzfoNqIA+aTiXXJK0WUl33PSRHRdOP1Ra6hXvpyOuayBpv/+8PWp6dcAdfLjA5wHhtnmvzviUI8HD7smK1pHMdWEBEpAV0tcEa77aQ7isTpWf2gkv1Zwl9Q6qhtArZahpWrqd8pFZfCVTJr1fGP1MAOWaU7VWL6aSfR1H4aoW/AuJm6mYpFza91XazvbiQVwqL2I7dgj9cMMqITU4KOF+uDw0If7gnaPzn9ZHWCzKZXsHkyx09hbz8xfHJGOGerfZ/3UTBFc1VP9luB8PZHArc4s97Ck7cjXmlc9s1SNnh9/0IyMVxVHT45FHMSHkfbRWOrZzJD/7NwnCGGBExFM1EaUsqYnhIZCt9iCxC3YUxQcc/YyBynN4yeMy54mZGw1YdnfjBLfZsZcQGJHD5plYuZtZzGtT5axTGEc+wFJIOBM9KqAVDP9EjXQbLx0CzDP4mU22ZXuJ8VI2WFomyKq0c1TmXoRIx/YMaDDW732YTvJ5ip9OWZPtfoIxhY3dsgFcXMXJc99avJFFdP8k0WMT2PMz+ir5MJ0eiN6lfXU79AAZgxWgRh5YEpzuhzzIV/hz+44gp6xGS55YblDp1bgfyVHbCq+cJHDHSmxvzviUI8HD7s0iqkrrOZBiSEBMmc+FtEcUNvYUESaJdbOknxv9zQYXQBWXAjhVlAVUuVy/jXrjzbqlhd3bt1v1suwhm+Kz2exc5+hS9LZfPmxnbMKNWSz5vsVCgRqAGpQXs9q9JWuqWTZ5z6syydbD6EBMmc+FtEcThqfYm+nJjcrjlayLajflRw0tRpl9AnyJHN/nJ5ELnF+20gvOmiAz6xIqPbqriBiwp6xGS55YblzJfV4qeU8G93/WUWBMPCkaxKCZlGaFwMFCp8heQuc6iRb1jA68WpXJP6vp74NfYCgxD5WsD5jQgknVUG044HfFesgIYec2QzhrWDvykmb0tYLCPPX67TWi9edT8CdDLRrlqFzRy5W/ZK6XTlbdtONX6hLB2OFGq9+HIqseypV7KXHoBO7n7dTBMrdxLOhJQGSPoL5pj/LI6myDxwsHGYOoX2buu8NvBiL3DQCNKjNj3DcLycA4oSv1dXsk8qipYTCIObMXgn4EYPCZ2IBLLpnCZ5Z1Obg1uUNLDyb68uEl8loUzY7NcsGOMwPFTHxPFm9o+t084ivyeYIWrwLKWa7wALlee5m92J"
-password = "bOnqtWHqs4t32kZeWEzfoNqIA+aTiXXJK0WUl33PSRHRdOP1Ra6hXvpyOuayBpv/+8PWp6dcAdfLjA5wHhtnmvzviUI8HD7smK1pHMdWEBEpAV0tcEa77aQ7isTpWf2gkv1Zwl9Q6qhtArZahpWrqd8pFZfCVTJr1fGP1MAOWaU7VWL6aSfR1H4aoW/AuJm6mYpFza91XazvbiQVwqL2I7dgj9cMMqITU4KOF+uDw0If7gnaPzn9ZHWCzKZXsHkyx09hbz8xfHJGOGerfZ/3UTBFc1VP9luB8PZHArc4s97Ck7cjXmlc9s1SNnh9/0IyMVxVHT45FHMSHkfbRWOrZzJD/7NwnCGGBExFM1EaUsqYnhIZCt9iCxC3YUxQcc/YyBynN4yeMy54mZGw1YdnfjBLfZsZcQGJHD5plYuZtZzGtT5axTGEc+wFJIOBM9KqAVDP9EjXQbLx0CzDP4mU22ZXuJ8VI2WFomyKq0c1TmXoRIx/YMaDDW732YTvJ5ip9OWZPtfoIxhY3dsgFcXMXJc99avJFFdP8k0WMT2PMz+ir5MJ0eiN6lfXU79AAZgxWgRh5YEpzuhzzIV/hz+44gp6xGS55YblDp1bgfyVHbCq+cJHDHSmxvzviUI8HD7s0iqkrrOZBiSEBMmc+FtEcUNvYUESaJdbOknxv9zQYXQBWXAjhVlAVUuVy/jXrjzbqlhd3bt1v1suwhm+Kz2exc5+hS9LZfPmxnbMKNWSz5vsVCgRqAGpQXs9q9JWuqWTZ5z6syydbD6EBMmc+FtEcThqfYm+nJjcrjlayLajflRw0tRpl9AnyJHN/nJ5ELnF+20gvOmiAz6xIqPbqriBiwp6xGS55YblzJfV4qeU8G93/WUWBMPCkaxKCZlGaFwMFCp8heQuc6iRb1jA68WpXJP6vp74NfYCgxD5WsD5jQgknVUG044HfFesgIYec2QzhrWDvykmb0tYLCPPX67TWi9edT8CdDLRrlqFzRy5W/ZK6XTlbdtONX6hLB2OFGq9+HIqseypV7KXHoBO7n7dTBMrdxLOhJQGSPoL5pj/LI6myDxwsHGYOoX2buu8NvBiL3DQCNKjNj3DcLycA4oSv1dXsk8qipYTCIObMXgn4EYPCZ2IBLLpnCZ5Z1Obg1uUNLDyb68uEl8loUzY7NcsGOMwPFTHxPFm9o+t084ivyeYIWrwLKWa7wALlee5m92J"
-# 3 逆向得到密码
-functionName = f'MyObj("{password}")'
+uid = '3702804938514856'
+functionName = f"getSign({uid})"
+print(functionName)
 result = ctx.eval(functionName)
+print(result)
+exit()
 import json
+
 print(json.loads(result))
+
+# a = 'yĹg,(lfi~ah`{mv,-n|jqewVxp{rvmmx,&effkx[!cs\"l\".Pq%widthl\"@q&heightl\"vr*getContextx$\"2d[!cs#l#,*;?|u.|uc{uq$fontl#vr(fillTextx$$龘ฑภ경2<[#c}l#2q*shadowBlurl#1q-shadowOffsetXl#$$limeq+shadowColorl#vr#arcx88802[%c}l#vr&strokex[ c}l\"v,)}eOmyoZB]mx[ cs!0s$l$Pb<k7l l!r&lengthb%^l$1+s$j\u0002l  s#i$1ek1s$gr#tack4)zgr#tac$! +0o![#cj?o ]!l$b%s\"o ]!l\"l$b*b^0d#>>>s!0s%yA0s\"l\"l!r&lengthb<k+l\"^l\"1+s\"j\u0005l  s&l&z0l!$ +[\"cs'(0l#i'1ps9wxb&s() &{s)/s(gr&Stringr,fromCharCodes)0s*yWl ._b&s o!])l l Jb<k$.aj;l .Tb<k$.gj/l .^b<k&i\"-4j!\u001f+& s+yPo!]+s!l!l Hd>&l!l Bd>&+l!l <d>&+l!l 6d>&+l!l &+ s,y=o!o!]/q\"13o!l q\"10o!],l 2d>& s.{s-yMo!o!]0q\"13o!]*Ld<l 4d#>>>b|s!o!l q\"10o!],l!& s/yIo!o!].q\"13o!],o!]*Jd<l 6d#>>>b|&o!]+l &+ s0l-l!&l-l!i'1z141z4b/@d<l\"b|&+l-l(l!b^&+l-l&zl'g,)gk}ejo{cm,)|yn~Lij~em[\"cl$b%@d<l&zl'l $ +[\"cl$b%b|&+l-l%8d<@b|l!b^&+ '
