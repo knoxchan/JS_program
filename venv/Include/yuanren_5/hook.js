@@ -1,5 +1,4 @@
 // cookie 中的 RM4hZBv0dDon443M 钩子
-
 (function () {
     Object.defineProperty(document, 'cookie', {
         set: function (cookie) {
@@ -22,5 +21,17 @@
     })
 })();
 
-
+(function () {
+    Object.defineProperty(document, 'cookie', {
+        set: function (cookie) {
+            if (cookie.indexOf('m') != -1) {
+                debugger;
+            }
+            return cookie;
+        }
+    })
+})();
+//停止浏览器log输出
+// var console={};
+console.log=function(){};//禁用所有控制台输出
 // _$qF 函数生成
