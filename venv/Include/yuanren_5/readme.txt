@@ -27,7 +27,7 @@ RM4hZBv0dDon443M=/UJ3coBVT6297cQLBNraIurn4/bzDuR+IjfE9vaHjXumFf+wV9emE9UqyeKbdD1
 1.m f 参数名字过于常见 所以从 RM4hZBv0dDon443M入手
     RM4hZBv0dDon443M 搜索结果为空 可能是通过一些手段将参数隐藏起来了
     使用hook 定位 cookie 中 RM4hZBv0dDon443M 生成的位置
-    发现RM4hZBv0dDon443M 最终是由 _0x4e96b4['_$ss'] 定义的
+    发现RM4hZBv0dDon443M 最终是等于 _0x4e96b4['_$ss']
     * _0x4e96b4(window)
     搜索_$ss 没有结果 推测和RM4hZBv0dDon443M 一样 通过一些手段隐藏起来了
     使用hook 定位window 中 _$ss 生成的位置
@@ -35,7 +35,7 @@ RM4hZBv0dDon443M=/UJ3coBVT6297cQLBNraIurn4/bzDuR+IjfE9vaHjXumFf+wV9emE9UqyeKbdD1
     扒下一些 _$ss生成位置的代码 发现是 使用AES编码 处理了一些_$UH数组的映射之后
     出现了 window的两个不知名参数 _$qF _$pr
     _$pr 长度为5的array
-    _$qF 长度为4的wordarray
+    _$qF 长度为16的aes key
 
     在研究pr push操作的时候 发现了cookie 中m的生成位置
 
@@ -45,17 +45,18 @@ RM4hZBv0dDon443M=/UJ3coBVT6297cQLBNraIurn4/bzDuR+IjfE9vaHjXumFf+wV9emE9UqyeKbdD1
     推测1：23 24 发现和时间戳有关系 可能cookie 50s有关系
     推测2：$_zw 其他位置没有很大关系 只需要注意23 24 时间需要特别定义 不能写死，才可以突破cookie 50s限制
     作为参考 23：1633879662000 24 1633879663000 比 24 = 23 + 1000
-    $_zw 的参数不怎么使用 使用在 一直是false
-    if ($_qp[$_qp['$_zw'][0x9](_$UH[0x2d5]['str'] + '[\x27$_zw\x27][25][23]')][_$UH[0x43]] === 'http:')
-    所以建议直接抄 修改23 24 位置 时间和 wa保持一直即可
+    $_zw 的参数不怎么使用 使用在某个if条件下：一直是false
+        if ($_qp[$_qp['$_zw'][0x9](_$UH[0x2d5]['str'] + '[\x27$_zw\x27][25][23]')][_$UH[0x43]] === 'http:')
+    所以建议直接抄 修改23 24 位置 时间和 wa保持一致即可
 
     好像还有有问题 应该是全部都抄下来了
     和23 24 没有关系 修改了23 24 也没有区别
     明天更换不一样的$_zw 检查是不是$_zw导致的结果错误
     更换了 好像也没有很好的效果
+    结论是 和zw的参数没有关系 注意到有3个 window下的变化的参数，经过验证发现是那三个参数变化导致计算结果错误
+
+    _$qF参数
+    _0x4e96b4['_$qF'] = CryptoJS['enc']['Utf8'][_$UH[0xff]](_0x4e96b4['btoa'](_0x4e96b4['_$is'])['slice'](0x0, 0x10))
 
 
-
-
-
-
+    全部参数都解析出来了 就是有点小问题 还是没有办法成功请求 世上无难事 只要肯放弃。。。
