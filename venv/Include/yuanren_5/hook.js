@@ -47,7 +47,7 @@
     var new_y = _0x474032;
     _0x474032 = function (_0x233f82) {
         var ret = new_y(_0x233f82);
-        console.log('解析前的时间 ', _0x233f82, '解析后的时间', ret);
+        console.warn('解析前的时间 ', _0x233f82, '解析后的时间', ret);
         return ret;
     }
 })();

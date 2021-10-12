@@ -937,83 +937,59 @@ function get_cookie_m(_$Wa) {
     return _0x474032(_$Wa);
 }
 
+function gettime() {
+    return new Date()['valueOf']().toString()
+}
+
 function main() {
     _0x4e96b4['_$pr'] = new Array()
     // 前
     _0x4e96b4['_$6_'] = 0x20dc5d57f;
     _0x4e96b4['_$tT'] = -0xa40bd9c;
     _0x4e96b4['_$Jy'] = 0x1b821d58;
-    t = new Date()['valueOf']()[_$UH[0x1f]]()
-    _0x4e96b4['_$pr']['push'](_0x474032(t))
-    // t = new Date()['valueOf']()
-    _0x4e96b4['_$pr']['push'](_0x474032(t))
+    _0x4e96b4['_$pr']['push'](_0x474032(gettime()))
     //    中间
     _0x4e96b4['_$6_'] = 0x20dc5d57f;
     _0x4e96b4['_$tT'] = -717253467;
-    _0x4e96b4['_$Jy'] = 1633942535971;
-    t = new Date()['valueOf']()[_$UH[0x1f]]()
-    _0x4e96b4['_$pr']['push'](_0x474032(t))
-    t = new Date()['valueOf']()[_$UH[0x1f]]()
-    _0x4e96b4['_$pr']['push'](_0x474032(t))
-    t = new Date()['valueOf']()[_$UH[0x1f]]()
-    _0x4e96b4['_$pr']['push'](_0x474032(t))
-    t = new Date()['valueOf']()[_$UH[0x1f]]()
-    _0x4e96b4['_$pr']['push'](_0x474032(t))
-    t = new Date()['valueOf']()[_$UH[0x1f]]()
-    _0x4e96b4['_$pr']['push'](_0x474032(t))
-    t = new Date()['valueOf']()[_$UH[0x1f]]()
-    _0x4e96b4['_$pr']['push'](_0x474032(t))
+    _0x4e96b4['_$Jy'] = new Date()['valueOf']();
+    _0x4e96b4['_$pr']['push'](_0x474032(gettime()))
+    _0x4e96b4['_$pr']['push'](_0x474032(gettime()))
+    _0x4e96b4['_$pr']['push'](_0x474032(gettime()))
     // 后
     _0x4e96b4['_$6_'] = -0x173848aa;
     _0x4e96b4['_$tT'] = -0x275e197f;
     _0x4e96b4['_$Jy'] = -0x182c0438;
-    t = new Date()['valueOf']()[_$UH[0x1f]]()
-    _0x4e96b4['_$pr']['push'](_0x474032(t))
-    t = new Date()['valueOf']()[_$UH[0x1f]]()
+    t = new Date()['valueOf']().toString()
+    f = Date.parse(new Date())
     // console.log(t)
     _0x4e96b4['_$pr']['push'](_0x474032(t))
 
 
     // 参数计算
-    _0x4e96b4['_$is'] = t;
-    console.log(_0x4e96b4['_$pr'][_$UH[0x1f]]())
-    _0x4e96b4['_$qF'] = _$Tk['enc']['Utf8'][_$UH[0xff]](btoa(_0x4e96b4['_$is'])['slice'](0x0, 0x10))
+    // _0x4e96b4['_$is'] = t;
+    _0x4e96b4['_$qF'] = _$Tk['enc']['Utf8'][_$UH[0xff]](btoa(t)['slice'](0x0, 0x10))
     _$Ww = _$Tk['enc']['Utf8']['parse'](_0x4e96b4['_$pr'][_$UH[0x1f]]());
     _0x29dd83 = _$Tk['AES']['encrypt'](_$Ww, _0x4e96b4['_$qF'], {
         'mode': _$Tk['mode']['ECB'],
         'padding': _$Tk['pad']['Pkcs7']
     });
     // console.log(_0x4e96b4['_$is'])
-    return [_0x4e96b4['_$is'], get_cookie_m(_0x4e96b4['_$is']), _0x29dd83[_$UH[0x1f]]()];
+    return [f, t, get_cookie_m(t), _0x29dd83[_$UH[0x1f]]()];
 }
 
 console.log(main())
+// main()
 
-// console.log(new Date()['valueOf']())
 
-// _0x4e96b4['_$6_'] = 0x20dc5d57f;
-// _0x4e96b4['_$tT'] = -0xa40bd9c;
-// _0x4e96b4['_$Jy'] = 0x1b821d58;
-// t = new Date()['valueOf']().toString()
-// t = '1633945321000'
-// console.log(_0x474032(t))
-_0x4e96b4['_$pr'] = new Array()
-_0x4e96b4['_$pr']['push']('23fc9e28f20ae62bb52ab0f036ba74c3')
-_0x4e96b4['_$pr']['push']('23fc9e28f20ae62bb52ab0f036ba74c3')
-_0x4e96b4['_$pr']['push']('84afdec60e89d792634fab4820fff07d')
-_0x4e96b4['_$pr']['push']('84afdec60e89d792634fab4820fff07d')
-_0x4e96b4['_$pr']['push']('265a75365b097187b1246b73ca4ff7bc')
-_0x4e96b4['_$pr']['push']('265a75365b097187b1246b73ca4ff7bc')
-_0x4e96b4['_$pr']['push']('3e8c32095c9b64f2bb01cebc5d71ed23')
-_0x4e96b4['_$pr']['push']('3e8c32095c9b64f2bb01cebc5d71ed23')
-_0x4e96b4['_$pr']['push']('c0cc93bf273f4aec728e53a8b98dcf85')
-_0x4e96b4['_$pr']['push']('c0cc93bf273f4aec728e53a8b98dcf85')
-
-_0x4e96b4['_$is'] = '1633945321200';
-_0x4e96b4['_$qF'] = _$Tk['enc']['Utf8'][_$UH[0xff]](btoa(_0x4e96b4['_$is'])['slice'](0x0, 0x10))
+_0x4e96b4['_$qF'] = _$Tk['enc']['Utf8'][_$UH[0xff]](btoa('1634031277573')['slice'](0x0, 0x10))
+_0x4e96b4['_$pr'] = ['dfa6f85204888a8c0b64ad2b36c7a8a8', '2da27d17d62462731b8bb4eb0b4d9b0f', '1ffaefdf5523b614e207e4faa1399d5e', '1ffaefdf5523b614e207e4faa1399d5e', 'add1f51cea4c17587347473f0c73e901']
 _$Ww = _$Tk['enc']['Utf8']['parse'](_0x4e96b4['_$pr'][_$UH[0x1f]]());
-_0x29dd83 = _$Tk['AES']['encrypt'](_$Ww, _0x4e96b4['_$qF'], {
-    'mode': _$Tk['mode']['ECB'],
-    'padding': _$Tk['pad']['Pkcs7']
-});
-console.log(_0x29dd83[_$UH[0x1f]]())
+console.log(get_cookie_m('1634031277573'))
+// console.log(_$Ww)
+///FRcaHoKOoZqvKOBn3LEem67OSqp7aGbSHl7avL7C6dUP0nXqpMZLKpr7qA83MpZlU7pxcxgzIR/hlczgC1C6FxRiMb6K31kmER4nskvc4aEni+EyD/ebEI3mm+BEebTkAQmkEJDyt/VbLblLQFwXLqOw+5EdBX2XNEdhrqkZoAn+6g7gDU7I21zTTu4yeg6YIBx0xOturE9Y+JN92uZ0K9aTnGXmJJS5SRJ8bcQYNc=
+///FRcaHoKOoZqvKOBn3LEem67OSqp7aGbSHl7avL7C6dUP0nXqpMZLKpr7qA83MpZlU7pxcxgzIR/hlczgC1C6FxRiMb6K31kmER4nskvc4aEni+EyD/ebEI3mm+BEebTkAQmkEJDyt/VbLblLQFwXLqOw+5EdBX2XNEdhrqkZoAn+6g7gDU7I21zTTu4yeg6YIBx0xOturE9Y+JN92uZ0K9aTnGXmJJS5SRJ8bcQYNc=
+// _0x29dd83 = _$Tk['AES']['encrypt'](_$Ww, _0x4e96b4['_$qF'], {
+//     'mode': _$Tk['mode']['ECB'],
+//     'padding': _$Tk['pad']['Pkcs7']
+// });
+// console.log(_0x29dd83[_$UH[0x1f]]())
