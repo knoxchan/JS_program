@@ -1,0 +1,40 @@
+main ={
+  '网站': '毛毛居，https://www.maomaozu.com/#/office?type=6',
+  '流程': {
+    'request': 'https://www.maomaozu.com/index/office.json',
+    'type': 'post',
+    'params_1': '和页码有关系 的加密内容 eg:CqiLoe/MhYW+0XbDZ7A5qCacdg513FGvclHXdfrgONygPNGwe+uVIrU4jz1ChDTP',
+    'return_1': '看不懂的内容【需要解密的数据】解密完成后变成租房信息'
+  },
+  '分析': [
+    'payload 的内容应该是和页码有关系的 ，通过全局事件监控 找到加密点',
+    '返回内容解密, 通过request call stack尝试查找加密点'
+  ],
+  '调试': {
+    'return_1': {
+      // e.data = e.data.replace(/^\s+|\s+$/gm, ""),
+      //        e.data = o.default.aes_decrypt(e.data),
+      //        e.data = JSON.parse(e.data))
+      '加密点': '',
+      'e.data': '请求返回的内容',
+      'o.default.aes_decrypt': {
+        'name': 'aes 加密',
+        'e': '返回的内容',
+        // 因为host固定 基本上是定值 -
+        //        'this.md5(i.host.replace(/\./g, "_")) 取前16 反转'
+        'a': '0a1fea31626b3b55'
+        //        e = n.default.enc.Utf8.parse(e);
+        //            var l = n.default.AES.decrypt(a, e, {
+        //                mode: n.default.mode.CBC,
+        //                padding: n.default.pad.Pkcs7,
+        //                iv: e
+        //            });
+      }
+    },
+    "params_1": {
+      '加密点': 'e.data = o.default.aes_encrypt(JSON.stringify(a)),',
+//       type 应该是和所有内容有关系 page 页码 expire 时间
+      '参数': 'JSON.stringify(a) = {"Type":"6","page":14,"expire":1647760418406}'
+    }
+  }
+}

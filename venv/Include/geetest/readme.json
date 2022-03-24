@@ -1,0 +1,161 @@
+main = {
+  '流程': {
+    1: '----- 进入滑块页面 ------',
+    2: {
+      'request': 'demo/gt/register-slide?t=1646370204707',
+      'params_1': 'int(time.time()*1000)',
+      'return_1': 'challenge:"90155bf283d979ec12f0f6f45518a9f0"',
+      'return_2': 'gt:"019924a82c70bb123aae90d483087f94"'
+    },
+    3: {
+      'request': 'gettype.php',
+      'params_1': 'gt',
+      'return_1': 'fullpage.js'
+    },
+    4: {
+      'request': 'get.php',
+      'parms_1': 'gt',
+      'parms_2': 'challenge',
+      'parms_3': 'w',
+      'display': '点击按钮'
+    },
+    5: '---------点击按钮--------',
+    6: {
+      'request': 'ajax.php',
+      'parms_1': 'gt',
+      'parms_2': 'challenge',
+      'parms_3': 'w',
+      'return_1': 'slide.7.8.6.js'
+    },
+    7: {
+      'request': 'get.php',
+      'parms_1': 'gt',
+      'parms_2': 'challenge',
+      // 返回的全部信息
+      'return_all': {
+        "gt": "019924a82c70bb123aae90d483087f94",
+        "challenge": "844c604ffa205cfa806a555f17d5e4afeh",
+        "id": "a844c604ffa205cfa806a555f17d5e4af",
+        "bg": "pictures/gt/09b7341fb/bg/bad725f32.jpg",
+        "fullbg": "pictures/gt/09b7341fb/09b7341fb.jpg",
+        "link": "",
+        "ypos": 75,
+        "xpos": 0,
+        "height": 160,
+        "slice": "pictures/gt/09b7341fb/slice/bad725f32.png",
+        "api_server": "https://api.geetest.com",
+        "static_servers": [
+          "static.geetest.com/",
+          "dn-staticdown.qbox.me/"
+        ],
+        "mobile": True,
+        "theme": "ant",
+        "theme_version": "1.2.6",
+        "template": "",
+        "logo": True,
+        "clean": False,
+        "type": "multilink",
+        "fullpage": False,
+        "feedback": "https://www.geetest.com/contact#report",
+        "show_delay": 250,
+        "hide_delay": 800,
+        "benchmark": False,
+        "version": "6.0.9",
+        "product": "embed",
+        "https": True,
+        "width": "100%",
+        "show_voice": True,
+        "c": [
+          12,
+          58,
+          98,
+          36,
+          43,
+          95,
+          62,
+          15,
+          12
+        ],
+        "s": "4b736151",
+        "so": 0,
+        "i18n_labels": {
+          "cancel": "取消",
+          "close": "关闭验证",
+          "error": "请重试",
+          "fail": "请正确拼合图像",
+          "feedback": "帮助反馈",
+          "forbidden": "怪物吃了拼图，请重试",
+          "loading": "加载中...",
+          "logo": "由极验提供技术支持",
+          "read_reversed": False,
+          "refresh": "刷新验证",
+          "slide": "拖动滑块完成拼图",
+          "success": "sec 秒的速度超过 score% 的用户",
+          "tip": "请完成下方验证",
+          "voice": "视觉障碍"
+        },
+        "gct_path": "/static/js/gct.1189014c79a9ad03b420e7225c2d979d.js"
+      },
+      //ID
+      'remark_1': 'id',
+      // 缺口图 - 乱序
+      'remark_2': 'bg',
+      // 没缺口的图 - 乱序
+      'remark_3': 'fullbg',
+      // 滑块图
+      'remark_4': 'slice',
+      // 长度8字符串
+      'remark_5': 's',
+      // 数组
+      'remark_6': 'c'
+    },
+    8: {
+      'request': 'ajax.php',
+      'parms_1': 'gt',
+      'parms_2': 'challenge',
+      'parms_3': 'w',
+      'reutrn_1': 'validate:"034be50f464604fd2a16fc4cbf598291"',
+      'return_2': 'message:”success“',
+      'remark': [
+        {
+          "success": 0,
+          "message": "fail"
+        },
+        //距离正确但轨迹异常则返回
+        {
+          "success": 0,
+          "message": "forbidden"
+        },
+        //校验通过则返回
+        {
+          "success": 1,
+          "message": "success",
+          "validate": "f98af504ec3208dc19911b0de0b083c7",
+          "score": "3"
+        }
+      ]
+    }
+  },
+  '分析': [
+    "全流程一共 6次请求 破解的点在468里面的w参数",
+    "验证码图片乱序的还原以及缺口位置的识别"
+  ],
+  '调式': [
+    {
+      'first_w': {
+        '加密点': '"\u0077": i + r'
+        //var r = t[$_CFAGh(1304)]()
+        //, o = $_BDg()[$_CFAGh(1366)](he[$_CFAGh(207)](t[$_CFAFI(143)]), t[$_CFAGh(1399)]())
+        //, i = p[$_CFAFI(1396)](o)
+        'r': {
+          '定义点': 'new X()["encrypt"](this["$_CCGs"](e));',
+          'new X()["encrypt"]': [],
+          'this["$_CCGs"](e)': [
+            '发现就是一个随机生成长度为16的字符串',
+            'function random_16str()'
+          ]
+        }
+      }
+    }
+  ]
+}
