@@ -31,12 +31,15 @@ traverse(ast, {
     },
     CallExpression: {
         exit(path) {
-            if (path.toString().indexOf('_0x') != -1 && path.toString().indexOf('console') == -1){
+            if (path.toString().indexOf('_0x') != -1 && path.toString().indexOf('console') == -1) {
                 eval(member_code2)
                 path.replaceWith(t.valueToNode(eval(path.toString())))
             }
         }
     },
+})
+
+traverse(ast, {
     MemberExpression(path) {
         const node = path.node;
         let property = path.get('property')

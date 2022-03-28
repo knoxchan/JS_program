@@ -14,19 +14,25 @@ let member_code  = ""
 for (let i = 0;i<3;i++){
     member_code += generator(ast.program.body[i],{compact:true}).code
     // 读取之后删除节点
-    ast.program.body[i].remove()
+    // ast.program.body[i].remove()
+    // delete ast.program.body[i]
 }
 eval(member_code)
 
 traverse(ast,{
-    CallExpression(path){
-        if(path.node.callee.name=='$b' && path.node.right.type =='StringLiteral')
-            
-
+    // 字符串 16进制
+    StringLiteral(path){
+        if (path.node.extra != undefined){
+            delete path.node.extra
+        }
     }
+    // CallExpression(path){
+    //     if(path.node.callee.name=='$b' && path.node.right.type =='StringLiteral')
+    //
+    // }
 })
 
-console.log($b('\x30\x78\x61\x65', '\x21\x77\x25\x33'))
+// console.log($b('\x30\x78\x61\x65', '\x21\x77\x25\x33'))
 
 let code = generator(ast).code
 
