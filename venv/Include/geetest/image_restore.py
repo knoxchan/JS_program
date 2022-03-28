@@ -54,7 +54,13 @@ def img_restore(path):
 
 
 def get_slider_offset_method3(pic_path, cut_pic_path, threshold=60):
-    """比较两张图片的像素点RGB的绝对值是否小于阈值60,如果在阈值内则相同,反之不同"""
+    """
+    比较两张图片的像素点RGB的绝对值是否小于阈值60,如果在阈值内则相同,反之不同"
+    :param pic_path: 原图
+    :param cut_pic_path: 缺口图
+    :param threshold: 阈值
+    :return: 缺口坐标 x
+    """
     pic_img = img_restore(pic_path)
     cut_img = img_restore(cut_pic_path)
     width, height = pic_img.size

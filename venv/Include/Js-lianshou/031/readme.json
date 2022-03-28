@@ -1,0 +1,37 @@
+{
+  "网站": "https://login.189.cn/web/login",
+  "加密内容": "登录密码加密",
+  "流程": "",
+  "分析": [
+    "Password: pABYXyzUogQ/WwBbM2WePg== 密码加密成这个样子",
+    "看network栈的时候 发现aes_min.js 基本断定是AES加密"
+  ],
+  "调试": [
+    "找到加密点",
+    "CryptoJS.MD5(\"login.189.cn\")",
+    "iv = \"1234567812345678\""
+  ],
+  "拓展部分": {
+    "加密内容": "自写滑块",
+    "流程": {
+      "1": {
+        "post": "https://login.189.cn/web/getPic",
+        "return": {
+          "capcode": "1648458559239 - 时间戳",
+          "slidingImage": "滑动图 - base64 转换",
+          "backImage": "背景图 - base64转换",
+          "yHeight": "39"
+        },
+        "2": {
+          "POST": "https://login.189.cn/web/checkcapcode",
+          "parms": {
+            "xpos": "49.5 - 偏移点 好像没有检测轨迹",
+            "capcode": "1648458559239",
+            "phonekey": "xx - 手机号码",
+            "slidingType": "login_sliding"
+          }
+        }
+      }
+    }
+  }
+}

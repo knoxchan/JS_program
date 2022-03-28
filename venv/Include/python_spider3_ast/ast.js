@@ -52,7 +52,7 @@ traverse(ast, {
             // path.remove()
         }
     },
-//    分类讨论
+//    分类讨论 - A
     CallExpression(path) {
         if (t.isIdentifier(path.node.callee.object, {name: 'A'})) {
             const y_code = y[path.node.callee.property.value];

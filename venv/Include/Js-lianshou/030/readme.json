@@ -1,5 +1,6 @@
-main ={
+{
   '网站': '毛毛居，https://www.maomaozu.com/#/office?type=6',
+  '内容': '返回体逆向',
   '流程': {
     'request': 'https://www.maomaozu.com/index/office.json',
     'type': 'post',
@@ -33,7 +34,7 @@ main ={
     },
     "params_1": {
       '加密点': 'e.data = o.default.aes_encrypt(JSON.stringify(a)),',
-//       type 应该是和所有内容有关系 page 页码 expire 时间
+      //       type 应该是和所有内容有关系 page 页码 expire 时间
       '参数': 'JSON.stringify(a) = {"Type":"6","page":14,"expire":1647760418406}'
     }
   }
