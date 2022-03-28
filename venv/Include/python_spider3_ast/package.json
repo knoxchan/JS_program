@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "@babel/generator": "^7.17.7",
+    "@babel/parser": "^7.17.8",
+    "@babel/traverse": "^7.17.3"
+  }
+}
