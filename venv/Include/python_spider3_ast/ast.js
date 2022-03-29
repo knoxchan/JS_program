@@ -48,16 +48,31 @@ traverse(ast, {
     // 获取y = xxx函数 并删除
     ExpressionStatement(path) {
         if (t.isMemberExpression(path.node.expression.left) && t.isIdentifier(path.node.expression.left.object, {name: 'y'})) {
-            eval(path.toString())
+            y[path.node.expression.left.property.value] = path.node.expression.right
+            // eval(path.toString())
             // path.remove()
         }
     },
-//    分类讨论 - A
-    CallExpression(path) {
-        if (t.isIdentifier(path.node.callee.object, {name: 'A'})) {
-            const y_code = y[path.node.callee.property.value];
-            console.log(y_code)
+    // 分类讨论 - 字符串 二项式 函数
+    // 字符串
+    MemberExpression(path) {
+        if (path.node.object.name === 'A') {
+            path.replaceWith(y[path.node.property.value]);
+            // const y_code = y[path.node.property.value];
+            // console.log(y_code)
             // if y_code.
+        }
+    },
+    // 二项式
+    CallExpression(path) {
+        if (path.node.callee.object && path.node.callee.object.name === 'A') {
+            const y_code = y[path.node.callee.property.value];
+            if (y_code.body.body[0].arguments.type == 'BinaryExpression')
+            {
+                const operator = y_code.body.body[0].arguments.operator;
+                t.BinaryExpression(operator,path.node.arguments[0],path.node.arguments[1])
+            }
+
         }
     }
 
