@@ -50,13 +50,13 @@ traverse(ast, {
         if (t.isMemberExpression(path.node.expression.left) && t.isIdentifier(path.node.expression.left.object, {name: 'y'})) {
             y[path.node.expression.left.property.value] = path.node.expression.right
             // eval(path.toString())
-            // path.remove()
+            path.remove()
         }
     },
     // 分类讨论 - 字符串 二项式 函数
     // 字符串
     MemberExpression(path) {
-        if (path.node.object.name === 'A') {
+        if (path.node.object.name === 'A' && (path.inList || (path.parent.type == 'AssignmentExpression' || 'VariableDeclarator'))) {
             path.replaceWith(y[path.node.property.value]);
             // const y_code = y[path.node.property.value];
             // console.log(y_code)
@@ -67,14 +67,29 @@ traverse(ast, {
     CallExpression(path) {
         if (path.node.callee.object && path.node.callee.object.name === 'A') {
             const y_code = y[path.node.callee.property.value];
-            if (y_code.body.body[0].arguments.type == 'BinaryExpression')
-            {
-                const operator = y_code.body.body[0].arguments.operator;
-                t.BinaryExpression(operator,path.node.arguments[0],path.node.arguments[1])
+            if (y_code.body.body[0].argument.type === 'BinaryExpression') {
+                const operator = y_code.body.body[0].argument.operator;
+                path.replaceWith(t.BinaryExpression(operator, path.node.arguments[0], path.node.arguments[1]));
+            } else if (y_code.body.body[0].argument.type == 'CallExpression') {
+                // 函数情况
+                const arg = path.node.arguments.slice(1);
+                path.replaceWith(t.CallExpression(path.node.arguments[0], arg));
             }
-
         }
-    }
+    },
+    // 控制流 P
+
+    // console['log'] --> console.log
+    MemberExpression:{
+        exit(path) {
+            if (path.node.property.type === 'StringLiteral') {
+                path.node.computed = false;
+                path.node.property.type = 'Identifier';
+                path.node.property.name = path.node.property.value;
+                delete path.node.property.value;
+            }
+        }
+    },
 
 
 })
